@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainPage from "./page/MainPage";
 import ClippedPage from "./page/ClippedPage";
+import MainPage from './page/MainPage';
 
 function App() {
   return (
