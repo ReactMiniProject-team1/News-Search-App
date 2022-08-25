@@ -1,17 +1,16 @@
-import styled from 'styled-components';
-import { BsFillBookmarkFill } from 'react-icons/fa';
+import styled from "styled-components";
+import { BsFillBookmarkFill } from "react-icons/bs";
 
-  const Bookmark = styled.div`
-    position: absolute;
-    top: 2.5rem;
-    right: 7%;
-  `;
+const BookmarkSt = styled.div`
+  position: absolute;
+  top: 2.5rem;
+  right: 7%;
+`;
 
-  export default function Bookmark() {
-    return(
-        <Bookmark>
-            <BsFillBookmarkFill />
-        </Bookmark>
-    )
-
-  }
+export default function Bookmark() {
+  return (
+    <BookmarkSt>
+      <BsFillBookmarkFill />
+    </BookmarkSt>
+  );
+}
