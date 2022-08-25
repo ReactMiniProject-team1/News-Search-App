@@ -46,7 +46,7 @@ const ArticleBodySt = styled.div`
   }
 `;
 
-const ArticleItem = () => {
+export default function ArticleItem() {
   return (
     <ArticleItemSt>
       <ArticleHeaderSt>
@@ -59,6 +59,4 @@ const ArticleItem = () => {
       </ArticleBodySt>
     </ArticleItemSt>
   );
-};
-
-export default ArticleItem;
+}
