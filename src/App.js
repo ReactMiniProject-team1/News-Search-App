@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './component/header/Header';
 import ClippedPage from "./page/ClippedPage";
