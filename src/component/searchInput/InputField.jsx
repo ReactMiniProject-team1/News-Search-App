@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 
 const InputContainerST = styled.div`
@@ -23,32 +22,11 @@ const InputContainerST = styled.div`
 `
 
 export default function InputField() {
-  
-  const [ value, setValue ] = useState("");
-
-  const onChangeInput = (e) => {
-    setValue(e.target.value)
-  }; 
-  const onKeyDownInput = (e) => {
-    if (e.nativeEvent.isComposing) {
-      return;
-    } 
-    if (e.key === 'Enter') {
-      setTimeout(() => {
-        console.log(e.target.value);
-        setValue('');
-      }, 500)
-    }
-  };
-
   return (
     <InputContainerST>
       <div className="searchBar">
         <input 
-          className="searchBar__input" 
-          onKeyDown={ onKeyDownInput } 
-          onChange={ onChangeInput }
-          value={ value } 
+          className="searchBar__input"
           type="text"  
         />
         <div className="searchBar__icon"></div>
