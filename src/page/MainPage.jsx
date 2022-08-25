@@ -1,12 +1,14 @@
 import React from "react";
 import InputField from "../component/searchInput/InputField";
-
+import Header from "../component/header/Header";
+import ArticleList from "../component/article/ArticleList";
 
 export default function MainPage() {
   return (
     <>
-      <h1>Welcome everyone!</h1>
+      <Header />
       <InputField />
+      <ArticleList />
     </>
   )
 }

@@ -1,5 +1,12 @@
 import React from "react";
+import Header from "../component/header/Header";
+import ArticleList from "../component/article/ArticleList";
 
 export default function ClippedPage() {
-  return <h1>clipped Page</h1>;
+  return (
+    <>
+      <Header />
+      <ArticleList />
+    </>
+  );
 }
