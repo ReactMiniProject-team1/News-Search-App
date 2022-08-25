@@ -25,10 +25,7 @@ export default function InputField() {
   return (
     <InputContainerST>
       <div className="searchBar">
-        <input 
-          className="searchBar__input"
-          type="text"  
-        />
+        <input className="searchBar__input" type="text" />
         <div className="searchBar__icon"></div>
       </div>
     </InputContainerST>
