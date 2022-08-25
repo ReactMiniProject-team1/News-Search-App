@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import logo from '../../img/logo.png';
-import Bookmark from './BookmarkBtn';
+import styled from "styled-components";
+import logo from "../../static/logo.png";
+import Bookmark from "./BookmarkBtn";
 
-const HeaderWrapper = styled.header `
+const HeaderWrapper = styled.header`
   position: fixed;
   top: 0;
   left: 0;
@@ -23,10 +23,12 @@ const Logo = styled.div`
 `;
 
 export default function Header() {
-    return (
-      <HeaderWrapper>
-        <Logo><img src={logo} alt="logo" /></Logo>
-        <Bookmark />
-      </HeaderWrapper>
-    );
+  return (
+    <HeaderWrapper>
+      <Logo>
+        <img src={logo} alt="logo" />
+      </Logo>
+      <Bookmark />
+    </HeaderWrapper>
+  );
 }
