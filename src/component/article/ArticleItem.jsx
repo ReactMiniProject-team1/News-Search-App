@@ -1,7 +1,8 @@
-import styled from 'styled-components';
-import ArticleList from './ArticleList';
+import styled from "styled-components";
+import { FaStar } from "react-icons/fa";
 
-const ArticleItemSt = styled.li`
+/* CSS */
+const ArticleItemSt = styled.div`
   margin: 1rem;
   padding-right: 1rem;
   border-right: 1px solid #ccc;
@@ -46,16 +47,18 @@ const ArticleBodySt = styled.div`
   }
 `;
 
-export default function ArticleItem() {
+export default function ArticleItem({ title, content, date }) {
   return (
     <ArticleItemSt>
       <ArticleHeaderSt>
-        <h2>title</h2>
-        <button>icon</button>
+        <h2>{title}</h2>
+        <button>
+          <FaStar />
+        </button>
       </ArticleHeaderSt>
       <ArticleBodySt>
-        <p>content</p>
-        <span>date</span>
+        <p>{content}</p>
+        <span>{date}</span>
       </ArticleBodySt>
     </ArticleItemSt>
   );

@@ -4,7 +4,7 @@ import ArticleList from "../component/article/ArticleList";
 export default function MainPage() {
   return (
     <>
-      <h1>Welcome everyone!</h1>;
+      <h1>Welcome everyone!</h1>
       <ArticleList />
     </>
   );
