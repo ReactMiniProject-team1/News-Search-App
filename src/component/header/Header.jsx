@@ -1,20 +1,17 @@
 import styled from "styled-components";
-import logo from "../../static/logo.png";
+import logo from "../../img/logo.png";
 import Bookmark from "./BookmarkBtn";
 
 const HeaderWrapper = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 2rem;
+  padding-bottom: 2rem;
   background-color: #fff;
 `;
 const Logo = styled.div`
-  width: 30%;
+  width: 70%;
   height: 60px;
   img {
     width: 100%;

@@ -70,8 +70,8 @@ const DUMMY_DATA = [
 /* CSS */
 const ArticleWrapper = styled.main`
   article {
-    margin: 200px 0% 3% 2%;
     display: grid;
+    margin-top: 3rem;
     grid-template-columns: 1fr 1fr 1fr;
     grid-auto-rows: 1fr;
     line-height: 1.2;

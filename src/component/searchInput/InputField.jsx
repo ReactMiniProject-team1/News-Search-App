@@ -3,14 +3,14 @@ import styled from "styled-components";
 const InputContainerST = styled.div`
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
 
   .searchBar__input {
-    align-item: center;
+    align-items: center;
     width: 20rem;
     height: 1.3rem;
     padding: 0.5rem 1.5rem;
-    border: border: 1px solid black;
+    border: 1px solid black;
     border-radius: 2rem;
     position: relative;
   }
@@ -19,7 +19,7 @@ const InputContainerST = styled.div`
     outline: none;
     font-size: 18px;
   }
-`
+`;
 
 export default function InputField() {
   return (
