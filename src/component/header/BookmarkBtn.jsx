@@ -5,6 +5,7 @@ const BookmarkSt = styled.div`
   position: absolute;
   top: 2.5rem;
   right: 7%;
+  cursor: pointer;
 `;
 
 export default function Bookmark() {
