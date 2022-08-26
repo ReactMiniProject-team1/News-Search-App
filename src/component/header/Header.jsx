@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../../img/logo.png";
+import logo from "../../static/logo.png";
 import Bookmark from "./BookmarkBtn";
 
 const HeaderWrapper = styled.header`
