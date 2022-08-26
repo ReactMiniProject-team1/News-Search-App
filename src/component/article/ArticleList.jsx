@@ -17,12 +17,13 @@ export default function ArticleList() {
   const everyArticles = useSelector(
     (state) => state.articleSlice.everyArticles
   );
+  console.log(everyArticles);
   const articles = everyArticles.map((article) => (
     <ArticleItem
-      key={article.id}
-      title={article.title}
-      content={article.content}
-      date={article.date}
+      key={article._id}
+      title={article.headline.main}
+      content={article.snippet}
+      date={article.pub_date}
     />
   ));
   return (

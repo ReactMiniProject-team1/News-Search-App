@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DUMMY_DATA } from "../static/dummyData";
+import { DATA } from "../static/dummyData";
 
 const initalState = {
-  everyArticles: DUMMY_DATA,
+  everyArticles: DATA,
   clippedArticles: [],
   history: [],
   isMainPage: true,
