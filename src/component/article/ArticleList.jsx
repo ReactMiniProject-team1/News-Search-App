@@ -24,10 +24,10 @@ export default function ArticleList() {
   const everyArticles = useSelector(
     (state) => state.articleSlice.everyArticles,
   );
-  console.log(everyArticles);
   const articles = everyArticles.map((article) => (
     <ArticleItem
       key={article._id}
+      id={article._id}
       title={article.headline.main}
       content={article.snippet}
       date={article.pub_date}
