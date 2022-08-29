@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { FaCreativeCommonsSamplingPlus } from "react-icons/fa";
 import { DATA } from "../static/dummyData";
 
 const initalState = {
@@ -21,19 +22,29 @@ export const articleSlice = createSlice({
       state.everyArticles.concat(action.payload.data);
     },
     toggleClippedArticles: (state, action) => {
-      //이거 되려나..?
+      if (action.payload.favoriteArticle) {
+        state.clippedArticles.push(action.payload.favoriteArticle);
+      } else if (action.payload.deleteId) {
+        state.clippedArticles = state.clippedArticles.filter(
+          (article) => article._id !== action.payload.deleteId,
+        );
+        console.log(state.clippedArticles);
+      }
+
+      /*
       const id = action.payload.id;
       const chosen = state.everyArticles.find((each) => each._id === id);
       if (!chosen.clipped) {
         state.clippedArticles.push({ ...chosen, clipped: true });
         state.everyArticles.map((each) =>
-          each._id === id ? { ...each, clipped: true } : each
+          each._id === id ? { ...each, clipped: true } : each,
         );
       } else {
         state.clippedArticles = state.clippedArticles.filter(
-          (each) => each._id !== id
+          (each) => each._id !== id,
         );
       }
+      */
     },
     setHistory: (state, action) => {
       const word = action.payload.word;
