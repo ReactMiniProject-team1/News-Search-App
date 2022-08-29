@@ -23,17 +23,13 @@ export default function Bookmark() {
       togglePages())
   }
 
- 
-  
-  console.log(isMainPage)
-
   return (
     <BookmarkSt>
       <Link to={isMainPage?'/clip':'/'}>
       <BsFillBookmarkFill 
         className={isMainPage?'':'active'} 
-        onClick={ onClick}
-        
+        onClick={onClick}
+         
       />
       </Link>
 
