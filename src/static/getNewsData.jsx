@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function GetData(query, page) {
+export default async function getNewstData(query, page) {
 
   const API_KEY = process.env.REACT_APP_KEY;
   const BASE_URL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';

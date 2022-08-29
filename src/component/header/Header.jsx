@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from "styled-components";
 import logo from "../../static/logo.png";
 import Bookmark from "./BookmarkBtn";
@@ -20,6 +21,7 @@ const Logo = styled.div`
 `;
 
 export default function Header() {
+
   return (
     <HeaderWrapper>
       <Logo>
