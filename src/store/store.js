@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import localStorageMiddleware from "./localStorageiddleware.js";
+//import localStorageMiddleware from "./localStorageiddleware.js";
 import articleSlice from "./reducer.js";
 
 // const reHydrateStore = () => {
@@ -13,6 +13,6 @@ export const store = configureStore({
     articleSlice: articleSlice,
   },
   // preloadedState: reHydrateStore(),
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(localStorageMiddleware),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware().concat(localStorageMiddleware),
 });

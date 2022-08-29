@@ -8,6 +8,7 @@ const initalState = {
   isMainPage: true,
   isLoading: false,
   searchWord: "",
+  page:1
 };
 
 export const articleSlice = createSlice({
@@ -21,19 +22,18 @@ export const articleSlice = createSlice({
       state.everyArticles.concat(action.payload.data);
     },
     toggleClippedArticles: (state, action) => {
-      //이거 되려나..?
       const id = action.payload.id;
       const chosen = state.everyArticles.find((each) => each._id === id);
       if (!chosen.clipped) {
         state.clippedArticles.push({ ...chosen, clipped: true });
-        state.everyArticles.map((each) =>
-          each._id === id ? { ...each, clipped: true } : each
-        );
       } else {
         state.clippedArticles = state.clippedArticles.filter(
           (each) => each._id !== id
         );
       }
+    },
+    toggleEveryArticles:(state,action)=>{
+      state.everyArticles= state.everyArticles.map(each=> each._id === action.payload.id ? {...each, clipped:!each.clipped} : each )
     },
     setHistory: (state, action) => {
       const word = action.payload.word;
@@ -55,6 +55,9 @@ export const articleSlice = createSlice({
     toggleIsLoading: (state, action) => {
       state.isLoading = action.payload.boolean;
     },
+    setPage:(state, action) =>{
+      state.page = action.payload.page
+    }
   },
 });
 
@@ -62,6 +65,7 @@ export const {
   setEveryArticles,
   setMoreArticles,
   toggleClippedArticles,
+  toggleEveryArticles,
   setHistory,
   setSearchWord,
   togglePages,
