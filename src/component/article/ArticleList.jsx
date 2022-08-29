@@ -6,16 +6,23 @@ import { useSelector } from "react-redux";
 const ArticleWrapper = styled.main`
   article {
     display: grid;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     grid-template-columns: 1fr 1fr 1fr;
     grid-auto-rows: 1fr;
     line-height: 1.2;
   }
 `;
+const HrStyle = styled.div`
+  width: 100%;
+  height: 10px;
+  margin-top: 40px;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
+`;
 
 export default function ArticleList() {
   const everyArticles = useSelector(
-    (state) => state.articleSlice.everyArticles
+    (state) => state.articleSlice.everyArticles,
   );
   console.log(everyArticles);
   const articles = everyArticles.map((article) => (
@@ -28,6 +35,7 @@ export default function ArticleList() {
   ));
   return (
     <ArticleWrapper>
+      <HrStyle />
       <article>{articles}</article>
     </ArticleWrapper>
   );
