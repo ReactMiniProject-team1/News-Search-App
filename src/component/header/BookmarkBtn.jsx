@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { useDispatch, useSelector } from 'react-redux';
 import { togglePages } from '../../store/reducer';
+import { Link } from 'react-router-dom';
 
 const BookmarkSt = styled.div`
   position: absolute;
@@ -18,13 +19,24 @@ export default function Bookmark() {
   const dispatch = useDispatch()
 
   const onClick =() =>{
-    dispatch(togglePages())
+    dispatch(
+      togglePages())
   }
+
+ 
+  
   console.log(isMainPage)
 
   return (
     <BookmarkSt>
-      <BsFillBookmarkFill className={isMainPage?'':'active'} onClick={onClick}/>
+      <Link to={isMainPage?'/clip':'/'}>
+      <BsFillBookmarkFill 
+        className={isMainPage?'':'active'} 
+        onClick={ onClick}
+        
+      />
+      </Link>
+
     </BookmarkSt>
   );
 }
