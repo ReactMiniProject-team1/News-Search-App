@@ -6,11 +6,19 @@ import { Link } from 'react-router-dom';
 
 const BookmarkSt = styled.div`
   position: absolute;
+  height: 3vh;
+  width: 10%;
   top: 2.5rem;
   right: 7%;
   cursor: pointer;
+
   .active{
     color: red;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+
   }
 `;
 

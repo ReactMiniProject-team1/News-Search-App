@@ -17,12 +17,8 @@ const ArticleHeaderSt = styled.header`
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  h2 {
-    overflow: hidden;
-    font-weight: bold;
-    font-size: 23px;
-  }
   button {
+    padding: 0.6rem;
     color: #525252;
     display: flex;
     font-size: 25px;
@@ -32,17 +28,25 @@ const ArticleHeaderSt = styled.header`
   }
 `;
 
+const ArticleTitle = styled.a`
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 23px;
+`;
+
 const ArticleBodySt = styled.div`
+  margin-top: 0.8rem;
   p {
     overflow: hidden;
     margin-top: 0.3rem;
     font-size: 15px;
   }
   span {
+    display: block;
     font-size: 14px;
     font-weight: 500;
     color: #8e8e8e;
-    margin-top: 0.3rem;
+    margin-top: 0.7rem;
   }
 `;
 
@@ -50,7 +54,9 @@ export default function ArticleItem({ title, content, date }) {
   return (
     <ArticleItemSt>
       <ArticleHeaderSt>
-        <h2>{title}</h2>
+        <ArticleTitle href="#" rel="noopener noreferrer" target="_blank">
+          {title}
+        </ArticleTitle>
         <button>
           <FaStar />
         </button>

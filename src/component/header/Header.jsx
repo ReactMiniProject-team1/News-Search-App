@@ -10,10 +10,11 @@ const HeaderWrapper = styled.header`
   padding-top: 2rem;
   padding-bottom: 2rem;
   background-color: #fff;
+  /* box-shadow: 5px 5px 5px; */
 `;
 const Logo = styled.div`
-  width: 70%;
-  height: 60px;
+  width: 25%;
+  height: 5vh;
   img {
     width: 100%;
     height: 100%;
