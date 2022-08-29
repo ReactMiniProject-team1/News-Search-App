@@ -8,7 +8,6 @@ const ArticleItemSt = styled.div`
   border-right: 1px solid #ccc;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   &:nth-child(3n) {
     border: none;
   }
