@@ -30,13 +30,21 @@ export const articleSlice = createSlice({
         );
         console.log(state.clippedArticles);
       }
-    },
-    toggleEveryArticles: (state, action) => {
-      state.everyArticles = state.everyArticles.map((each) =>
-        each._id === action.payload.id
-          ? { ...each, clipped: !each.clipped }
-          : each,
-      );
+
+      /*
+      const id = action.payload.id;
+      const chosen = state.everyArticles.find((each) => each._id === id);
+      if (!chosen.clipped) {
+        state.clippedArticles.push({ ...chosen, clipped: true });
+        state.everyArticles.map((each) =>
+          each._id === id ? { ...each, clipped: true } : each,
+        );
+      } else {
+        state.clippedArticles = state.clippedArticles.filter(
+          (each) => each._id !== id,
+        );
+      }
+      */
     },
     setHistory: (state, action) => {
       const word = action.payload.word;
