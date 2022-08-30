@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { FaCreativeCommonsSamplingPlus } from "react-icons/fa";
 import { DATA } from "../static/dummyData";
 
 const initalState = {
@@ -9,6 +8,7 @@ const initalState = {
   isMainPage: true,
   isLoading: false,
   searchWord: "",
+  page: 1,
 };
 
 export const articleSlice = createSlice({
@@ -55,11 +55,14 @@ export const articleSlice = createSlice({
     setSearchWord: (state, action) => {
       state.searchWord = action.payload.word;
     },
-    togglePages: (state) => {
-      state.isMainPage = !state.isMainPage;
+    togglePages: (state, action) => {
+      state.isMainPage = action.payload.state;
     },
     toggleIsLoading: (state, action) => {
       state.isLoading = action.payload.boolean;
+    },
+    setPage: (state, action) => {
+      state.page = action.payload.page;
     },
   },
 });
@@ -68,6 +71,7 @@ export const {
   setEveryArticles,
   setMoreArticles,
   toggleClippedArticles,
+  toggleEveryArticles,
   setHistory,
   setSearchWord,
   togglePages,
