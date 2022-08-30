@@ -53,35 +53,31 @@ const ArticleBodySt = styled.div`
   }
 `;
 
-export default function ArticleItem({ id, title, content, date }) {
+export default function ArticleItem({
+  id,
+  title,
+  content,
+  date,
+  url,
+  clipped,
+  // activeClass,
+}) {
   const dispatch = useDispatch();
   const [isStarActive, setIsStarActive] = useState(false);
 
   const starTogglekHandler = () => {
     setIsStarActive((prev) => !prev);
-    console.log("1");
+    dispatch(toggleClippedArticles(id));
   };
-
-  console.log("2", isStarActive);
-
-  if (isStarActive) {
-    // clippedArticles에 추가
-    dispatch(
-      toggleClippedArticles({ favoriteArticle: { id, title, content, date } }),
-    );
-  } else {
-    // clippedArticles에서 삭제
-    dispatch(toggleClippedArticles({ deleteId: id }));
-  }
 
   return (
     <ArticleItemSt>
       <ArticleHeaderSt>
-        <ArticleTitle href="#" rel="noopener noreferrer" target="_blank">
+        <ArticleTitle href={url} rel="noopener noreferrer" target="_blank">
           {title}
         </ArticleTitle>
         <button
-          className={isStarActive ? "active" : ""}
+          className={isStarActive || clipped ? "active" : ""}
           onClick={starTogglekHandler}
         >
           <FaStar />
