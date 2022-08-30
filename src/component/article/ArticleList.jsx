@@ -48,7 +48,6 @@ export default function ArticleList() {
           date={article.date}
           url={article.url}
           clipped={article.clipped}
-          // activeClass={"active"}
         />
       ))
     ) : (
@@ -65,7 +64,6 @@ export default function ArticleList() {
         date={article.date}
         url={article.url}
         clipped={article.clipped}
-        // activeClass={article.clipped ? "active" : ""}
       />
     ))
   );

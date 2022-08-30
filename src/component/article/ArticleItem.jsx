@@ -60,13 +60,9 @@ export default function ArticleItem({
   date,
   url,
   clipped,
-  // activeClass,
 }) {
   const dispatch = useDispatch();
-  const [isStarActive, setIsStarActive] = useState(false);
-
   const starTogglekHandler = () => {
-    setIsStarActive((prev) => !prev);
     dispatch(toggleClippedArticles(id));
   };
 
@@ -77,7 +73,7 @@ export default function ArticleItem({
           {title}
         </ArticleTitle>
         <button
-          className={isStarActive || clipped ? "active" : ""}
+          className={clipped ? "active" : ""}
           onClick={starTogglekHandler}
         >
           <FaStar />
