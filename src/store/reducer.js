@@ -52,8 +52,8 @@ export const articleSlice = createSlice({
     setSearchWord: (state, action) => {
       state.searchWord = action.payload.word;
     },
-    togglePages: (state) => {
-      state.isMainPage = !state.isMainPage;
+    togglePages: (state, action) => {
+      state.isMainPage = action.payload.state;
     },
     toggleIsLoading: (state, action) => {
       state.isLoading = action.payload.boolean;
