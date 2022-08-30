@@ -28,13 +28,9 @@ const HrStyle = styled.div`
 `;
 
 export default function ArticleList() {
-  const everyArticles = useSelector(
-    (state) => state.articleSlice.everyArticles,
-  );
-  const clippedArticles = useSelector(
-    (state) => state.articleSlice.clippedArticles,
-  );
-  const isMainPage = useSelector((state) => state.articleSlice.isMainPage);
+  const everyArticles = useSelector((state) => state.everyArticles);
+  const clippedArticles = useSelector((state) => state.clippedArticles);
+  const isMainPage = useSelector((state) => state.isMainPage);
 
   const articles = !isMainPage ? (
     // 북마크 활성화

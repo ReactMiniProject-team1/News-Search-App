@@ -22,7 +22,8 @@ const BookmarkSt = styled.div`
 `;
 
 export default function Bookmark() {
-  const isMainPage = useSelector((state) => state.articleSlice.isMainPage);
+  const isMainPage = useSelector((state) => state.isMainPage);
+  console.log(isMainPage);
   const dispatch = useDispatch();
 
   const onClick = () => {
