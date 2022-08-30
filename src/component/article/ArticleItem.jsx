@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleClippedArticles } from "../../store/reducer";
 
 /* CSS */
-const ArticleItemSt = styled.div`
+const ArticleItemSection = styled.div`
   margin: 1rem;
   padding-right: 1rem;
   border-right: 1px solid #ccc;
@@ -15,42 +14,36 @@ const ArticleItemSt = styled.div`
     border: none;
   }
 `;
-
-const ArticleHeaderSt = styled.header`
+const ArticleHeaderSection = styled.header`
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  button {
-    padding: 0.6rem;
-    color: #525252;
-    display: flex;
-    font-size: 25px;
-    &.active {
-      color: #ffd056;
-    }
-  }
 `;
-
+const StarButton = styled.button`
+  padding: 0.6rem;
+  color: ${(props) => (props.active ? "#ffd056" : "#525252")};
+  display: flex;
+  font-size: 25px;
+`;
 const ArticleTitle = styled.a`
   overflow: hidden;
   font-weight: bold;
   font-size: 23px;
 `;
-
-const ArticleBodySt = styled.div`
+const ArticleBodySection = styled.div`
   margin-top: 0.8rem;
-  p {
-    overflow: hidden;
-    margin-top: 0.3rem;
-    font-size: 15px;
-  }
-  span {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: #8e8e8e;
-    margin-top: 0.7rem;
-  }
+`;
+const ArticleContent = styled.p`
+  overflow: hidden;
+  margin-top: 0.3rem;
+  font-size: 15px;
+`;
+const ArticleDate = styled.span`
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8e8e8e;
+  margin-top: 0.7rem;
 `;
 
 export default function ArticleItem({
@@ -67,22 +60,22 @@ export default function ArticleItem({
   };
 
   return (
-    <ArticleItemSt>
-      <ArticleHeaderSt>
+    <ArticleItemSection>
+      <ArticleHeaderSection>
         <ArticleTitle href={url} rel="noopener noreferrer" target="_blank">
           {title}
         </ArticleTitle>
-        <button
-          className={clipped ? "active" : ""}
+        <StarButton
+          active={clipped ? true : false}
           onClick={starTogglekHandler}
         >
           <FaStar />
-        </button>
-      </ArticleHeaderSt>
-      <ArticleBodySt>
-        <p>{content}</p>
-        <span>{date}</span>
-      </ArticleBodySt>
-    </ArticleItemSt>
+        </StarButton>
+      </ArticleHeaderSection>
+      <ArticleBodySection>
+        <ArticleContent>{content}</ArticleContent>
+        <ArticleDate>{date}</ArticleDate>
+      </ArticleBodySection>
+    </ArticleItemSection>
   );
 }
