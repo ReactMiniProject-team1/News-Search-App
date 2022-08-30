@@ -22,29 +22,24 @@ export const articleSlice = createSlice({
       state.everyArticles.concat(action.payload.data);
     },
     toggleClippedArticles: (state, action) => {
-      if (action.payload.favoriteArticle) {
-        state.clippedArticles.push(action.payload.favoriteArticle);
-      } else if (action.payload.deleteId) {
-        state.clippedArticles = state.clippedArticles.filter(
-          (article) => article._id !== action.payload.deleteId,
-        );
-        console.log(state.clippedArticles);
-      }
+      const id = action.payload;
+      const chosen = state.everyArticles.find((article) => article.id === id);
 
-      /*
-      const id = action.payload.id;
-      const chosen = state.everyArticles.find((each) => each._id === id);
       if (!chosen.clipped) {
+        // 클립 기사 추가
         state.clippedArticles.push({ ...chosen, clipped: true });
-        state.everyArticles.map((each) =>
-          each._id === id ? { ...each, clipped: true } : each,
+        state.everyArticles = state.everyArticles.map((article) =>
+          article.id === id ? { ...article, clipped: true } : article,
         );
       } else {
+        // 클립 기사 삭제
         state.clippedArticles = state.clippedArticles.filter(
-          (each) => each._id !== id,
+          (article) => article.id !== id,
+        );
+        state.everyArticles = state.everyArticles.map((article) =>
+          article.id === id ? { ...article, clipped: false } : article,
         );
       }
-      */
     },
     setHistory: (state, action) => {
       const word = action.payload.word;
