@@ -26,9 +26,7 @@ const HrStyle = styled.div`
 `;
 
 export default function ArticleList() {
-  const { everyArticles, clippedArticles, isMainPage } = useSelector(
-    ({ articleSlice }) => articleSlice,
-  );
+  const { everyArticles, clippedArticles, isMainPage } = useSelector(state=>state)
 
   const articles =
     (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
