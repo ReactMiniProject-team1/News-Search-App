@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import getNewsData from "../.././static/getNewsData";
-// import { DATA } from "../.././static/dummyData";
-import { setEveryArticles, setHistory, setPage, setSearchWord } from "../../store/reducer";
+import {
+  setEveryArticles,
+  setHistory,
+  setPage,
+  setSearchWord,
+} from "../../store/reducer";
 
 const InputContainerSt = styled.div`
   display: flex;
@@ -28,16 +32,18 @@ const InputContainerSt = styled.div`
 
 let timer;
 export default function InputField() {
-
-  const dispatch = useDispatch();
   const [value, setValue] = useState("");
+  const dispatch = useDispatch();
+
   const getArticles = (e) => {
     setValue(e.target.value);
+
     if (e.target.value === "") return;
+
     clearTimeout(timer);
+
     timer = setTimeout(async () => {
       const data = await getNewsData(value, 1);
-      // const data = await DATA(value, 1);
       dispatch(setPage({ page: 1 }));
       dispatch(setEveryArticles({ data: data }));
       dispatch(setHistory({ word: value }));
@@ -58,5 +64,4 @@ export default function InputField() {
       </div>
     </InputContainerSt>
   );
-  
 }
