@@ -34,7 +34,7 @@ const LogoWrap = styled(Link)`
 `;
 
 export default function Header() {
-  const isMainPage = useSelector((state)=>state.isMainPage)
+  const isMainPage = useSelector((state)=>state.save.isMainPage)
   const dispatch = useDispatch()
 
   const onClickHandler = () => {
