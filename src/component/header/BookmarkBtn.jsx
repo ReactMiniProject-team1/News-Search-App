@@ -15,7 +15,7 @@ const BookmarkSt = styled.div`
   color: ${(props) => (props.active ? 'black' : 'red')};
 `;
 
-const BsFillBookmark = styled.svg`
+const BsFillBookmarkFillSt = styled(BsFillBookmarkFill)`
   width: 100%;
   height: 100%;
 `;
@@ -32,9 +32,7 @@ export default function Bookmark() {
   return (
     <BookmarkSt active = {isMainPage}>
       <Link to={isMainPage?'/clip':'/'}>
-      <BsFillBookmarkFill 
-        onClick={onClick}
-      />
+        <BsFillBookmarkFillSt onClick={onClick} />
       </Link>
 
     </BookmarkSt>
