@@ -1,18 +1,29 @@
 import { configureStore } from "@reduxjs/toolkit";
-import localStorageMiddleware from "./localStorageiddleware.js";
 import articleSlice from "./reducer.js";
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-// const reHydrateStore = () => {
-//   if (localStorage.getItem("articles") !== undefined) {
-//     return JSON.parse(localStorage.getItem("articles"));
-//   }
-// };
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, articleSlice);
 
 export const store = configureStore({
-  reducer: {
-    articleSlice: articleSlice,
-  },
-  // preloadedState: reHydrateStore(),
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(localStorageMiddleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });

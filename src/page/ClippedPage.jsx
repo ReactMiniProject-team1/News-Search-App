@@ -1,14 +1,16 @@
 import React from "react";
 import Header from "../component/header/Header";
 import ArticleList from "../component/article/ArticleList";
-import { store } from "../store/store";
-import { Provider } from "react-redux";
+import { useDispatch } from "react-redux";
+import { togglePages } from "../store/reducer";
 
 export default function ClippedPage() {
+  const dispatch = useDispatch();
+  dispatch(togglePages({ state: false }));
   return (
-    <Provider store={store}>
+    <>
       <Header />
       <ArticleList />
-    </Provider>
+    </>
   );
 }

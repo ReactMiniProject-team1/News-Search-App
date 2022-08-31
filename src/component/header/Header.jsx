@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from "styled-components";
 import logo from "../../static/logo.png";
 import Bookmark from "./BookmarkBtn";
@@ -10,7 +9,6 @@ const HeaderWrapper = styled.header`
   padding-top: 2rem;
   padding-bottom: 2rem;
   background-color: #fff;
-  /* box-shadow: 5px 5px 5px; */
 `;
 const Logo = styled.div`
   width: 25%;
@@ -22,7 +20,6 @@ const Logo = styled.div`
 `;
 
 export default function Header() {
-
   return (
     <HeaderWrapper>
       <Logo>

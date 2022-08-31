@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { FaCreativeCommonsSamplingPlus } from "react-icons/fa";
 import { DATA } from "../static/dummyData";
 
 const initalState = {
@@ -9,6 +8,7 @@ const initalState = {
   isMainPage: true,
   isLoading: false,
   searchWord: "",
+  page: 1,
 };
 
 export const articleSlice = createSlice({
@@ -16,41 +16,46 @@ export const articleSlice = createSlice({
   initialState: initalState,
   reducers: {
     setEveryArticles: (state, action) => {
-      state.everyArticles = action.payload.data;
+      const clippedArticles = state.clippedArticles;
+      const data = action.payload.data;
+      state.everyArticles = data.map((each) =>
+        !!clippedArticles.find((clip) => clip._id === each._id)
+          ? { ...each, clipped: true }
+          : each,
+      );
     },
     setMoreArticles: (state, action) => {
-      state.everyArticles.concat(action.payload.data);
+      const clippedArticles = state.clippedArticles;
+      let data = action.payload.data;
+      data = data.map((each) =>
+        !!clippedArticles.find((clip) => clip._id === each._id)
+          ? { ...each, clipped: true }
+          : each,
+      );
+      state.everyArticles.concat(data);
     },
     toggleClippedArticles: (state, action) => {
-      if (action.payload.favoriteArticle) {
-        state.clippedArticles.push(action.payload.favoriteArticle);
-      } else if (action.payload.deleteId) {
-        state.clippedArticles = state.clippedArticles.filter(
-          (article) => article._id !== action.payload.deleteId,
-        );
-        console.log(state.clippedArticles);
-      }
+      const id = action.payload;
+      const chosen = state.everyArticles.find((article) => article.id === id);
 
-      /*
-      const id = action.payload.id;
-      const chosen = state.everyArticles.find((each) => each._id === id);
       if (!chosen.clipped) {
         state.clippedArticles.push({ ...chosen, clipped: true });
-        state.everyArticles.map((each) =>
-          each._id === id ? { ...each, clipped: true } : each,
+        state.everyArticles = state.everyArticles.map((article) =>
+          article.id === id ? { ...article, clipped: true } : article,
         );
       } else {
         state.clippedArticles = state.clippedArticles.filter(
-          (each) => each._id !== id,
+          (article) => article.id !== id,
+        );
+        state.everyArticles = state.everyArticles.map((article) =>
+          article.id === id ? { ...article, clipped: false } : article,
         );
       }
-      */
     },
     setHistory: (state, action) => {
       const word = action.payload.word;
       if (state.history.includes(word)) {
-        const index = state.history.indexOf(word);
-        state.history.splice(index, 1);
+        state.history = state.history.filter((each) => each !== word);
       }
       if (state.history.length > 5) {
         state.history.shift();
@@ -60,11 +65,14 @@ export const articleSlice = createSlice({
     setSearchWord: (state, action) => {
       state.searchWord = action.payload.word;
     },
-    togglePages: (state) => {
-      state.isMainPage = !state.isMainPage;
+    togglePages: (state, action) => {
+      state.isMainPage = action.payload.state;
     },
     toggleIsLoading: (state, action) => {
       state.isLoading = action.payload.boolean;
+    },
+    setPage: (state, action) => {
+      state.page = action.payload.page;
     },
   },
 });
@@ -73,6 +81,7 @@ export const {
   setEveryArticles,
   setMoreArticles,
   toggleClippedArticles,
+  toggleEveryArticles,
   setHistory,
   setSearchWord,
   togglePages,
