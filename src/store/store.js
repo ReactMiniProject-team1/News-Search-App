@@ -1,5 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
-import articleSlice from "./reducer.js";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistReducer,
   FLUSH,
@@ -10,13 +9,20 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import saveReducer from "./slices/save.js";
+import unsaveReudcer from "./slices/unsave.js";
 
+const rootReducer = combineReducers({
+  save: saveReducer,
+  unsave: unsaveReudcer,
+});
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["save"],
 };
 
-const persistedReducer = persistReducer(persistConfig, articleSlice);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
