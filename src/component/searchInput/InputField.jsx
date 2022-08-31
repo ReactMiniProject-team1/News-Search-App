@@ -1,62 +1,82 @@
 import styled from "styled-components";
+import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import getNewsData from "../.././static/getNewsData";
-// import { DATA } from "../.././static/dummyData";
 import { setEveryArticles, setHistory, setPage, setSearchWord } from "../../store/reducer";
+import { getNewsData } from "../.././static/getNewsData";
+// import { DATA } from "../.././static/dummyData";
 
-const InputContainerSt = styled.div`
+const SearchContainerSt = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  width: 20rem;
+  height: 1.3rem;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid black;
+  border-radius: 2rem;
+  margin: 0 auto;
+`
 
-  .searchBar__input {
-    align-items: center;
-    width: 20rem;
-    height: 1.3rem;
-    padding: 0.5rem 1.5rem;
-    border: 1px solid black;
-    border-radius: 2rem;
-    position: relative;
-  }
-  input:focus {
-    border: 2px solid rgb(140, 140, 140);
-    outline: none;
-    font-size: 18px;
-  }
-`;
+const SearchInputSt = styled.input`
+  flex: 1;
+  padding: 10px 20px;
+  font-size: normal;
+  border: none;
 
-let timer;
+  &:focus {
+  border: 2px solid rgb(140, 140, 140);
+  outline-width: 0;
+  outline: none;
+  font-size: 18px;
+  }
+`
+
 export default function InputField() {
 
   const dispatch = useDispatch();
   const [value, setValue] = useState("");
-  const getArticles = (e) => {
-    setValue(e.target.value);
-    if (e.target.value === "") return;
-    clearTimeout(timer);
-    timer = setTimeout(async () => {
-      const data = await getNewsData(value, 1);
-      // const data = await DATA(value, 1);
-      dispatch(setPage({ page: 1 }));
-      dispatch(setEveryArticles({ data: data }));
-      dispatch(setHistory({ word: value }));
-      dispatch(setSearchWord({ word: value }));
-    }, 500);
+  let timeOut;
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+  }
+
+  const onChange = (e) => {
+    if (!e.target.value) {
+      return;
+    } else {
+      clearTimeout(timeOut);
+
+      timeOut = setTimeout(async () => {
+        // const data = await DATA( value, 1);
+        const data = await getNewsData( value, 1 );
+        dispatch(setPage({ page: 1 }));
+        dispatch(setEveryArticles({ data: data }));
+        dispatch(setHistory({ word: value }));
+        dispatch(setSearchWord({ word: value }));
+      }, 500);
+      setValue(e.target.value);
+    }
   };
 
+  const onFocus = () => { 
+    setValue('');
+  }
+
   return (
-    <InputContainerSt>
-      <div className="searchBar">
-        <input
-          className="searchBar__input"
-          type="text"
-          value={value}
-          onChange={(e) => getArticles(e)}
-        />
-        <div className="searchBar__icon"></div>
-      </div>
-    </InputContainerSt>
+    <SearchContainerSt>
+      <form onSubmit={ onSubmit }>
+        <SearchInputSt>
+          <input 
+            type="text"
+            value={value}
+            onChange={ onChange }
+            onFocus={ onFocus }
+          />
+          <FaSearch size="20px" color="lightgrey"/>
+        </SearchInputSt>
+      </form>
+    </SearchContainerSt>
   );
   
-}
+};
