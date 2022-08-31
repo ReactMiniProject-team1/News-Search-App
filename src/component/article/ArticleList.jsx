@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import ArticleItem from "./ArticleItem";
 import { useSelector } from "react-redux";
+import { IoIosArrowUp } from "react-icons/io";
 
 /* CSS */
+const MainSection = styled.main`
+  margin-top: 20vh;
+`;
 const ArticleSecion = styled.article`
   display: grid;
   margin-top: 1.5rem;
@@ -24,6 +28,25 @@ const HrStyle = styled.div`
   border-top: 3px solid black;
   border-bottom: 3px solid black;
 `;
+const ScrollTopBtn = styled.button`
+  position: fixed;
+  bottom: 4vh;
+  right: 4vh;
+  width: 8vh;
+  height: 8vh;
+  border-radius: 50%;
+  background-color: #000;
+  opacity: 0.9;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  &:hover {
+    transform: scale(1.1);
+    animation: transform 0.5s ease;
+  }
+`;
+const ScrollTopIcon = styled(IoIosArrowUp)`
+  color: #fff;
+  font-size: 25px;
+`;
 
 export default function ArticleList() {
   const { everyArticles, clippedArticles, isMainPage } = useSelector(
@@ -39,10 +62,17 @@ export default function ArticleList() {
       ))
     );
 
+  const scollTopHandler = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <main>
+    <MainSection>
       <HrStyle />
       <ArticleSecion>{articles}</ArticleSecion>
-    </main>
+      <ScrollTopBtn onClick={scollTopHandler}>
+        <ScrollTopIcon />
+      </ScrollTopBtn>
+    </MainSection>
   );
 }
