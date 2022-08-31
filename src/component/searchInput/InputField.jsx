@@ -10,6 +10,11 @@ import {
 } from "../../store/reducer";
 
 const InputContainerSt = styled.div`
+  position: fixed;
+  /* margin-top: 2vh; */
+  top: 12vh;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
