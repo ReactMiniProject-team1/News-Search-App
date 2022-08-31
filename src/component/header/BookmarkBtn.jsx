@@ -12,14 +12,12 @@ const BookmarkSt = styled.div`
   right: 7%;
   cursor: pointer;
 
-  .active{
-    color: red;
-  }
-  svg {
-    width: 100%;
-    height: 100%;
+  color: ${(props) => (props.active ? 'red' : 'black')};
+`;
 
-  }
+const BsFillBookmark = styled.svg`
+  width: 100%;
+  height: 100%;
 `;
 
 export default function Bookmark() {
@@ -32,12 +30,10 @@ export default function Bookmark() {
   }
 
   return (
-    <BookmarkSt>
+    <BookmarkSt active = {isMainPage?'':'active'}>
       <Link to={isMainPage?'/clip':'/'}>
       <BsFillBookmarkFill 
-        className={isMainPage?'':'active'} 
         onClick={onClick}
-         
       />
       </Link>
 

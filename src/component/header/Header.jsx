@@ -25,7 +25,6 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
-      
       <Logo>
         <img src={logo} alt="logo" />
       </Logo>
