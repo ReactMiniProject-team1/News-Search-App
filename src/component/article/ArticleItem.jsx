@@ -46,17 +46,12 @@ const ArticleDate = styled.span`
   margin-top: 0.7rem;
 `;
 
-export default function ArticleItem({
-  id,
-  title,
-  content,
-  date,
-  url,
-  clipped,
-}) {
+export default function ArticleItem({ article }) {
   const dispatch = useDispatch();
+
+  const { title, content, date, url, clipped } = article;
   const starTogglekHandler = () => {
-    dispatch(toggleClippedArticles(id));
+    dispatch(toggleClippedArticles({ chosen: article }));
   };
 
   return (

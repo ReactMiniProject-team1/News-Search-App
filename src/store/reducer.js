@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DATA } from "../static/dummyData";
 
 const initalState = {
-  everyArticles: DATA,
+  everyArticles: [],
   clippedArticles: [],
   history: [],
   isMainPage: true,
@@ -19,7 +18,7 @@ export const articleSlice = createSlice({
       const clippedArticles = state.clippedArticles;
       const data = action.payload.data;
       state.everyArticles = data.map((each) =>
-        !!clippedArticles.find((clip) => clip._id === each._id)
+        !!clippedArticles.find((clip) => clip.id === each.id)
           ? { ...each, clipped: true }
           : each,
       );
@@ -28,15 +27,15 @@ export const articleSlice = createSlice({
       const clippedArticles = state.clippedArticles;
       let data = action.payload.data;
       data = data.map((each) =>
-        !!clippedArticles.find((clip) => clip._id === each._id)
+        !!clippedArticles.find((clip) => clip.id === each.id)
           ? { ...each, clipped: true }
           : each,
       );
       state.everyArticles.concat(data);
     },
     toggleClippedArticles: (state, action) => {
-      const id = action.payload;
-      const chosen = state.everyArticles.find((article) => article.id === id);
+      const chosen = action.payload.chosen;
+      const id = chosen.id;
 
       if (!chosen.clipped) {
         state.clippedArticles.push({ ...chosen, clipped: true });
@@ -86,6 +85,7 @@ export const {
   setSearchWord,
   togglePages,
   toggleIsLoading,
+  setPage,
 } = articleSlice.actions;
 
 export default articleSlice.reducer;
