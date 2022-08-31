@@ -8,6 +8,7 @@ import {
   setSearchWord,
   setPage,
 } from "../../store/slices/unsave";
+
 const InputContainerSt = styled.div`
   position: fixed;
   /* margin-top: 2vh; */
@@ -44,7 +45,7 @@ export default function InputField() {
   };
 
   useEffect(() => {
-    if (value === "") return;
+    if (!value) return;
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
@@ -73,4 +74,4 @@ export default function InputField() {
       </div>
     </InputContainerSt>
   );
-}
+};
