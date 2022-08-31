@@ -16,23 +16,34 @@ export const articleSlice = createSlice({
   initialState: initalState,
   reducers: {
     setEveryArticles: (state, action) => {
-      state.everyArticles = action.payload.data;
+      const clippedArticles = state.clippedArticles;
+      const data = action.payload.data;
+      state.everyArticles = data.map((each) =>
+        !!clippedArticles.find((clip) => clip._id === each._id)
+          ? { ...each, clipped: true }
+          : each,
+      );
     },
     setMoreArticles: (state, action) => {
-      state.everyArticles.concat(action.payload.data);
+      const clippedArticles = state.clippedArticles;
+      let data = action.payload.data;
+      data = data.map((each) =>
+        !!clippedArticles.find((clip) => clip._id === each._id)
+          ? { ...each, clipped: true }
+          : each,
+      );
+      state.everyArticles.concat(data);
     },
     toggleClippedArticles: (state, action) => {
       const id = action.payload;
       const chosen = state.everyArticles.find((article) => article.id === id);
 
       if (!chosen.clipped) {
-        // 클립 기사 추가
         state.clippedArticles.push({ ...chosen, clipped: true });
         state.everyArticles = state.everyArticles.map((article) =>
           article.id === id ? { ...article, clipped: true } : article,
         );
       } else {
-        // 클립 기사 삭제
         state.clippedArticles = state.clippedArticles.filter(
           (article) => article.id !== id,
         );
@@ -44,8 +55,7 @@ export const articleSlice = createSlice({
     setHistory: (state, action) => {
       const word = action.payload.word;
       if (state.history.includes(word)) {
-        const index = state.history.indexOf(word);
-        state.history.splice(index, 1);
+        state.history = state.history.filter((each) => each !== word);
       }
       if (state.history.length > 5) {
         state.history.shift();
