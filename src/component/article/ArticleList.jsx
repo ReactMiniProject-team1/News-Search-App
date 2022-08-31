@@ -1,95 +1,48 @@
 import styled from "styled-components";
 import ArticleItem from "./ArticleItem";
-
-const DUMMY_DATA = [
-  {
-    id: "a1",
-    title: "What is Lorem Ipsum?",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    date: "22.08.12",
-  },
-  {
-    id: "a2",
-    title: "What is Lorem Ipsum?",
-    content:
-      "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    date: "22.08.12",
-  },
-  {
-    id: "a3",
-    title: "Where does it come from?",
-    content:
-      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. ",
-    date: "22.08.12",
-  },
-  {
-    id: "a4",
-    title: "What is Lorem Ipsum?",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    date: "22.08.12",
-  },
-  {
-    id: "a5",
-    title: "What is Lorem Ipsum?",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    date: "22.08.12",
-  },
-  {
-    id: "a6",
-    title: "What is Lorem Ipsum?",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    date: "22.08.12",
-  },
-  {
-    id: "a7",
-    title: "What is Lorem Ipsum?",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    date: "22.08.12",
-  },
-  {
-    id: "a8",
-    title: "What is Lorem Ipsum?",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    date: "22.08.12",
-  },
-  {
-    id: "a9",
-    title: "What is Lorem Ipsum?",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    date: "22.08.12",
-  },
-];
+import { useSelector } from "react-redux";
 
 /* CSS */
-const ArticleWrapper = styled.main`
-  article {
-    display: grid;
-    margin-top: 3rem;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: 1fr;
-    line-height: 1.2;
-  }
+const ArticleSecion = styled.article`
+  display: grid;
+  margin-top: 1.5rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
+  line-height: 1.2;
+`;
+const EmptyArticleText = styled.h2`
+  color: #999;
+  margin-top: 10%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+const HrStyle = styled.div`
+  width: 100%;
+  height: 10px;
+  margin-top: 40px;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
 `;
 
 export default function ArticleList() {
-  const articles = DUMMY_DATA.map((article) => (
-    <ArticleItem
-      key={article.id}
-      title={article.title}
-      content={article.content}
-      date={article.date}
-    />
-  ));
+  const { everyArticles, clippedArticles, isMainPage } = useSelector(
+    ({ articleSlice }) => articleSlice,
+  );
+
+  const articles =
+    (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
+      <EmptyArticleText>There are no articles.</EmptyArticleText>
+    ) : (
+      (isMainPage ? everyArticles : clippedArticles).map((article) => (
+        <ArticleItem key={article.id} {...article} />
+      ))
+    );
+
   return (
-    <ArticleWrapper>
-      <article>{articles}</article>
-    </ArticleWrapper>
+    <main>
+      <HrStyle />
+      <ArticleSecion>{articles}</ArticleSecion>
+    </main>
   );
 }

@@ -22,6 +22,7 @@ const InputContainerST = styled.div`
 `;
 
 export default function InputField() {
+
   return (
     <InputContainerST>
       <div className="searchBar">

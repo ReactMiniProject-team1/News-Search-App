@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../../img/logo.png";
+import logo from "../../static/logo.png";
 import Bookmark from "./BookmarkBtn";
 
 const HeaderWrapper = styled.header`
@@ -11,8 +11,8 @@ const HeaderWrapper = styled.header`
   background-color: #fff;
 `;
 const Logo = styled.div`
-  width: 70%;
-  height: 60px;
+  width: 25%;
+  height: 5vh;
   img {
     width: 100%;
     height: 100%;
