@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import getNewsData from "../.././static/getNewsData";
 import {
@@ -40,19 +40,23 @@ export default function InputField() {
     setValue(e.target.value);
 
     if (e.target.value === "") return;
+  };
 
+  useEffect(() => {
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
       dispatch(toggleIsLoading({ state: true }));
+
       const data = await getNewsData(value, 1);
+
+      dispatch(setSearchWord({ word: value }));
       dispatch(setPage({ page: 1 }));
       dispatch(setEveryArticles({ data: data }));
       dispatch(setHistory({ word: value }));
-      dispatch(setSearchWord({ word: value }));
       dispatch(toggleIsLoading({ state: false }));
     }, 500);
-  };
+  }, [value]);
 
   return (
     <InputContainerSt>
