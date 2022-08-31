@@ -27,15 +27,15 @@ const HrStyle = styled.div`
 
 export default function ArticleList() {
   const { everyArticles, clippedArticles, isMainPage } = useSelector(
-    ({ articleSlice }) => articleSlice,
+    (state) => state,
   );
-
+  console.log(everyArticles, clippedArticles);
   const articles =
     (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
       (isMainPage ? everyArticles : clippedArticles).map((article) => (
-        <ArticleItem key={article.id} {...article} />
+        <ArticleItem key={article.id} article={article} />
       ))
     );
 
