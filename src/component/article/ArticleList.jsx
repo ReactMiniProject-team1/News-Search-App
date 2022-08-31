@@ -26,10 +26,12 @@ const HrStyle = styled.div`
 `;
 
 export default function ArticleList() {
-  const { everyArticles, clippedArticles, isMainPage, isLoading } = useSelector(
-    (state) => state,
+  const { everyArticles, clippedArticles, isMainPage } = useSelector(
+    (state) => state.save,
   );
-  console.log(everyArticles, clippedArticles);
+  const isLoading = useSelector((state) => state.unsave.isLoading);
+
+  console.log(everyArticles);
   const articles =
     (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>

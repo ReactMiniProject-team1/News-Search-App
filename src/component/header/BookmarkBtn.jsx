@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { BsFillBookmarkFill } from "react-icons/bs";
-import { useDispatch, useSelector } from 'react-redux';
-import { togglePages } from '../../store/reducer';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { togglePages } from "../../store/slices/save";
+import { Link } from "react-router-dom";
 
 const BookmarkSt = styled.div`
   position: absolute;
@@ -12,7 +12,7 @@ const BookmarkSt = styled.div`
   right: 7%;
   cursor: pointer;
 
-  color: ${(props) => (props.active ? 'black' : 'red')};
+  color: ${(props) => (props.active ? "black" : "red")};
 `;
 
 const BsFillBookmark = styled.svg`
@@ -21,22 +21,18 @@ const BsFillBookmark = styled.svg`
 `;
 
 export default function Bookmark() {
-  const isMainPage = useSelector((state)=>state.isMainPage)
-  const dispatch = useDispatch()
+  const isMainPage = useSelector((state) => state.save.isMainPage);
+  const dispatch = useDispatch();
 
-  const onClick =() =>{
-    dispatch(
-      togglePages({state:!isMainPage}))
-  }
+  const onClick = () => {
+    dispatch(togglePages({ state: !isMainPage }));
+  };
 
   return (
-    <BookmarkSt active = {isMainPage}>
-      <Link to={isMainPage?'/clip':'/'}>
-      <BsFillBookmarkFill 
-        onClick={onClick}
-      />
+    <BookmarkSt active={isMainPage}>
+      <Link to={isMainPage ? "/clip" : "/"}>
+        <BsFillBookmarkFill onClick={onClick} />
       </Link>
-
     </BookmarkSt>
   );
 }

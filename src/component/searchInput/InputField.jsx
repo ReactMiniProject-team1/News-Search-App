@@ -2,14 +2,12 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import getNewsData from "../.././static/getNewsData";
+import { setEveryArticles, setHistory } from "../../store/slices/save";
 import {
-  setEveryArticles,
-  setHistory,
-  setPage,
-  setSearchWord,
   toggleIsLoading,
-} from "../../store/reducer";
-
+  setSearchWord,
+  setPage,
+} from "../../store/slices/unsave";
 const InputContainerSt = styled.div`
   display: flex;
   justify-content: center;
@@ -37,7 +35,6 @@ export default function InputField() {
   const dispatch = useDispatch();
 
   const getArticles = (e) => {
-    if (e.target.value === "") return;
     setValue(e.target.value);
   };
 
@@ -46,7 +43,6 @@ export default function InputField() {
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
-      console.log(value);
       dispatch(toggleIsLoading({ state: true }));
 
       const data = await getNewsData(value, 1);
