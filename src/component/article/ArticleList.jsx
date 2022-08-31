@@ -26,7 +26,7 @@ const HrStyle = styled.div`
 `;
 
 export default function ArticleList() {
-  const { everyArticles, clippedArticles, isMainPage } = useSelector(
+  const { everyArticles, clippedArticles, isMainPage, isLoading } = useSelector(
     (state) => state,
   );
   console.log(everyArticles, clippedArticles);
@@ -42,7 +42,9 @@ export default function ArticleList() {
   return (
     <main>
       <HrStyle />
-      <ArticleSecion>{articles}</ArticleSecion>
+      <ArticleSecion>
+        {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : articles}
+      </ArticleSecion>
     </main>
   );
 }

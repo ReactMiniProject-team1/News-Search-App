@@ -7,6 +7,7 @@ import {
   setHistory,
   setPage,
   setSearchWord,
+  toggleIsLoading,
 } from "../../store/reducer";
 
 const InputContainerSt = styled.div`
@@ -43,11 +44,13 @@ export default function InputField() {
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
+      dispatch(toggleIsLoading({ state: true }));
       const data = await getNewsData(value, 1);
       dispatch(setPage({ page: 1 }));
       dispatch(setEveryArticles({ data: data }));
       dispatch(setHistory({ word: value }));
       dispatch(setSearchWord({ word: value }));
+      dispatch(toggleIsLoading({ state: false }));
     }, 500);
   };
 
