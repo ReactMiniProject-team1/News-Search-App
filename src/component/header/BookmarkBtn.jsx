@@ -12,7 +12,7 @@ const BookmarkSt = styled.div`
   right: 7%;
   cursor: pointer;
 
-  color: ${(props) => (props.active ? 'red' : 'black')};
+  color: ${(props) => (props.active ? 'black' : 'red')};
 `;
 
 const BsFillBookmark = styled.svg`
@@ -21,16 +21,16 @@ const BsFillBookmark = styled.svg`
 `;
 
 export default function Bookmark() {
-  const isMainPage = useSelector((state)=>state.articleSlice.isMainPage)
+  const isMainPage = useSelector((state)=>state.isMainPage)
   const dispatch = useDispatch()
 
   const onClick =() =>{
     dispatch(
-      togglePages())
+      togglePages({state:!isMainPage}))
   }
 
   return (
-    <BookmarkSt active = {isMainPage?'':'active'}>
+    <BookmarkSt active = {isMainPage}>
       <Link to={isMainPage?'/clip':'/'}>
       <BsFillBookmarkFill 
         onClick={onClick}
