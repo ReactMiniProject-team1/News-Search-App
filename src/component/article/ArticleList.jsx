@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 import { IoIosArrowUp } from "react-icons/io";
 
 /* CSS */
+const MainSection = styled.main`
+  margin-top: 20vh;
+`;
 const ArticleSecion = styled.article`
   display: grid;
   margin-top: 1.5rem;
@@ -64,12 +67,12 @@ export default function ArticleList() {
   };
 
   return (
-    <main>
+    <MainSection>
       <HrStyle />
       <ArticleSecion>{articles}</ArticleSecion>
       <ScrollTopBtn onClick={scollTopHandler}>
         <ScrollTopIcon />
       </ScrollTopBtn>
-    </main>
+    </MainSection>
   );
 }
