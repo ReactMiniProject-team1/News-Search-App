@@ -1,6 +1,15 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import getNewsData from "../.././static/getNewsData";
+import {
+  setEveryArticles,
+  setHistory,
+  setPage,
+  setSearchWord,
+} from "../../store/reducer";
 
-const InputContainerST = styled.div`
+const InputContainerSt = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,14 +30,38 @@ const InputContainerST = styled.div`
   }
 `;
 
+let timer;
 export default function InputField() {
+  const [value, setValue] = useState("");
+  const dispatch = useDispatch();
+
+  const getArticles = (e) => {
+    setValue(e.target.value);
+
+    if (e.target.value === "") return;
+
+    clearTimeout(timer);
+
+    timer = setTimeout(async () => {
+      const data = await getNewsData(value, 1);
+      dispatch(setPage({ page: 1 }));
+      dispatch(setEveryArticles({ data: data }));
+      dispatch(setHistory({ word: value }));
+      dispatch(setSearchWord({ word: value }));
+    }, 500);
+  };
 
   return (
-    <InputContainerST>
+    <InputContainerSt>
       <div className="searchBar">
-        <input className="searchBar__input" type="text" />
+        <input
+          className="searchBar__input"
+          type="text"
+          value={value}
+          onChange={(e) => getArticles(e)}
+        />
         <div className="searchBar__icon"></div>
       </div>
-    </InputContainerST>
+    </InputContainerSt>
   );
 }
