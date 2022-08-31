@@ -37,15 +37,16 @@ export default function InputField() {
   const dispatch = useDispatch();
 
   const getArticles = (e) => {
-    setValue(e.target.value);
-
     if (e.target.value === "") return;
+    setValue(e.target.value);
   };
 
   useEffect(() => {
+    if (value === "") return;
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
+      console.log(value);
       dispatch(toggleIsLoading({ state: true }));
 
       const data = await getNewsData(value, 1);
