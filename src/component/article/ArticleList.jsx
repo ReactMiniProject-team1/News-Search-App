@@ -50,9 +50,11 @@ const ScrollTopIcon = styled(IoIosArrowUp)`
 
 export default function ArticleList() {
   const { everyArticles, clippedArticles, isMainPage } = useSelector(
-    (state) => state,
+    (state) => state.save,
   );
-  console.log(everyArticles, clippedArticles);
+  const isLoading = useSelector((state) => state.unsave.isLoading);
+
+  console.log(everyArticles);
   const articles =
     (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
@@ -69,7 +71,9 @@ export default function ArticleList() {
   return (
     <MainSection>
       <HrStyle />
-      <ArticleSecion>{articles}</ArticleSecion>
+      <ArticleSecion>
+        {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : articles}
+      </ArticleSecion>
       <ScrollTopBtn onClick={scollTopHandler}>
         <ScrollTopIcon />
       </ScrollTopBtn>

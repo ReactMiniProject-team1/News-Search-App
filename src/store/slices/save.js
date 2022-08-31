@@ -5,13 +5,10 @@ const initalState = {
   clippedArticles: [],
   history: [],
   isMainPage: true,
-  isLoading: false,
-  searchWord: "",
-  page: 1,
 };
 
-export const articleSlice = createSlice({
-  name: "articleHandler",
+export const saveSlice = createSlice({
+  name: "save",
   initialState: initalState,
   reducers: {
     setEveryArticles: (state, action) => {
@@ -61,17 +58,9 @@ export const articleSlice = createSlice({
       }
       state.history.push(word);
     },
-    setSearchWord: (state, action) => {
-      state.searchWord = action.payload.word;
-    },
+
     togglePages: (state, action) => {
       state.isMainPage = action.payload.state;
-    },
-    toggleIsLoading: (state, action) => {
-      state.isLoading = action.payload.boolean;
-    },
-    setPage: (state, action) => {
-      state.page = action.payload.page;
     },
   },
 });
@@ -80,12 +69,8 @@ export const {
   setEveryArticles,
   setMoreArticles,
   toggleClippedArticles,
-  toggleEveryArticles,
   setHistory,
-  setSearchWord,
   togglePages,
-  toggleIsLoading,
-  setPage,
-} = articleSlice.actions;
+} = saveSlice.actions;
 
-export default articleSlice.reducer;
+export default saveSlice.reducer;

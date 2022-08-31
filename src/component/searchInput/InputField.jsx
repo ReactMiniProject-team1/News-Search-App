@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import getNewsData from "../.././static/getNewsData";
+import { setEveryArticles, setHistory } from "../../store/slices/save";
 import {
-  setEveryArticles,
-  setHistory,
-  setPage,
+  toggleIsLoading,
   setSearchWord,
-} from "../../store/reducer";
-
+  setPage,
+} from "../../store/slices/unsave";
 const InputContainerSt = styled.div`
   position: fixed;
   /* margin-top: 2vh; */
@@ -42,19 +41,24 @@ export default function InputField() {
 
   const getArticles = (e) => {
     setValue(e.target.value);
+  };
 
-    if (e.target.value === "") return;
-
+  useEffect(() => {
+    if (value === "") return;
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
+      dispatch(toggleIsLoading({ state: true }));
+
       const data = await getNewsData(value, 1);
+
+      dispatch(setSearchWord({ word: value }));
       dispatch(setPage({ page: 1 }));
       dispatch(setEveryArticles({ data: data }));
       dispatch(setHistory({ word: value }));
-      dispatch(setSearchWord({ word: value }));
+      dispatch(toggleIsLoading({ state: false }));
     }, 500);
-  };
+  }, [value]);
 
   return (
     <InputContainerSt>

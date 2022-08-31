@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { toggleClippedArticles } from "../../store/reducer";
+import { toggleClippedArticles } from "../../store/slices/save";
 
 /* CSS */
 const ArticleItemSection = styled.div`
