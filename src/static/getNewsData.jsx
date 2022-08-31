@@ -1,16 +1,14 @@
 import axios from "axios";
 
-export default async function getNewsData(query, page) {
+const API_KEY = process.env.REACT_APP_API_KEY;
+console.log(API_KEY);
+const BASE_URL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';
 
-  const API_KEY = process.env.REACT_APP_API_KEY;
-  console.log(API_KEY);
-  const BASE_URL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';
+export default async function getNewsData(query, page) {
 
   const URL = (query, page) => 
     `${BASE_URL}?api-key=${API_KEY}&q=${query}&page=${page}&begin_date=19800101&sort=relevance`;
 
-  // let query = 'bts'
-  // let page = 1;
   let result = await axios.get(URL(query, page), {
     params: {
       source: "The New York Times",
