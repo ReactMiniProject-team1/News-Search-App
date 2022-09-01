@@ -12,20 +12,19 @@ import storage from "redux-persist/lib/storage";
 import saveReducer from "./slices/save.js";
 import unsaveReudcer from "./slices/unsave.js";
 
-const rootReducer = combineReducers({
-  save: saveReducer,
-  unsave: unsaveReudcer,
-});
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["save"],
+  whitelist: ["clippedArticles", "history"],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const rootReducer = combineReducers({
+  save: persistReducer(persistConfig, saveReducer),
+  unsave: unsaveReudcer,
+});
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

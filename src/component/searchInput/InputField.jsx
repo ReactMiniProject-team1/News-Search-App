@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import History from './History'
+import History from "./History";
 import { FaSearch } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { getNewsData } from "../../static/getNewsData";
@@ -19,13 +19,13 @@ const InputBarContainerSt = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const InputFormSt = styled.form`
   position: relative;
   align-items: center;
- `
- 
+`;
+
 const InputSt = styled.input`
   align-items: center;
   width: 20rem;
@@ -44,16 +44,15 @@ const InputSt = styled.input`
     outline: none;
     font-size: 18px;
   }
- `
+`;
 const IconSt = styled.div`
   position: absolute;
   top: 0.65rem;
   right: 1.5rem;
-`
+`;
 
 let timer;
 export default function InputField() {
-
   const [keyword, setKeyword] = useState("");
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
@@ -85,23 +84,23 @@ export default function InputField() {
       dispatch(setHistory({ word: keyword }));
       dispatch(toggleIsLoading({ state: false }));
     }, 500);
-  }, [keyword]);
+  }, [value]);
 
   return (
     <InputBarContainerSt>
       <InputFormSt onSubmit={(e) => e.preventDefault()}>
         <InputSt
           type="text"
-          value={ keyword }
-          onChange={ handleKeyword }
-          onFocus={ showHistory }
-          onBlur={ hideHistory }
+          value={keyword}
+          onChange={handleKeyword}
+          onFocus={showHistory}
+          onBlur={hideHistory}
         />
         <IconSt>
           <FaSearch />
         </IconSt>
       </InputFormSt>
-      { show && <History /> } 
+      {show && <History />}
     </InputBarContainerSt>
   );
-};
+}
