@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import History from './History'
 import { FaSearch } from "react-icons/fa";
-import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getNewsData } from "../.././static/getNewsData";
-// import { History } from "../.././static/History";
+import { getNewsData } from "../../static/getNewsData";
 import { setEveryArticles, setHistory } from "../../store/slices/save";
 import {
   toggleIsLoading,
@@ -11,7 +11,7 @@ import {
   setPage,
 } from "../../store/slices/unsave";
 
-const SearchFormSt = styled.form`
+const InputBarContainerSt = styled.form`
   position: fixed;
   top: 12vh;
   left: 0;
@@ -21,7 +21,7 @@ const SearchFormSt = styled.form`
   align-items: center;
 `
 
-const SearchBarSt = styled.div`
+const InputFormSt = styled.div`
   position: relative;
   align-items: center;
  `
@@ -53,44 +53,44 @@ const IconSt = styled.div`
 
 let timer;
 export default function InputField() {
-  const [value, setValue] = useState("");
+
+  const [keyword, setKeyword] = useState("");
   const dispatch = useDispatch();
 
-  const getArticle = (e) => {
-    setValue(e.target.value);
+  const handleKeyword = (e) => {
+    setKeyword(e.target.value);
   };
 
   useEffect(() => {
-    if (!value) return;
+    if (!keyword) return;
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
       dispatch(toggleIsLoading({ state: true }));
 
-      const data = await getNewsData(value, 1);
+      const data = await getNewsData(keyword, 1);
 
-      dispatch(setSearchWord({ word: value }));
+      dispatch(setSearchWord({ word: keyword }));
       dispatch(setPage({ page: 1 }));
       dispatch(setEveryArticles({ data: data }));
-      dispatch(setHistory({ word: value }));
+      dispatch(setHistory({ word: keyword }));
       dispatch(toggleIsLoading({ state: false }));
     }, 500);
-  }, [value]);
+  }, [keyword]);
 
   return (
-    <SearchFormSt>
-      <SearchBarSt>
+    <InputBarContainerSt>
+      <InputFormSt>
         <InputSt
-          className="searchBar__input"
           type="text"
-          value={ value }
-          onChange={ (e) => getArticle(e) }
+          value={ keyword }
+          onChange={ handleKeyword }
         />
         <IconSt>
           <FaSearch />
         </IconSt>
-      </SearchBarSt>
-    </SearchFormSt>
-
+      </InputFormSt>
+      <History />
+    </InputBarContainerSt>
   );
 };
