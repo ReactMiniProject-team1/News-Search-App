@@ -11,7 +11,7 @@ import {
   setPage,
 } from "../../store/slices/unsave";
 
-const InputBarContainerSt = styled.form`
+const InputBarContainerSt = styled.div`
   position: fixed;
   top: 12vh;
   left: 0;
@@ -21,7 +21,7 @@ const InputBarContainerSt = styled.form`
   align-items: center;
 `
 
-const InputFormSt = styled.div`
+const InputFormSt = styled.form`
   position: relative;
   align-items: center;
  `
@@ -55,10 +55,19 @@ let timer;
 export default function InputField() {
 
   const [keyword, setKeyword] = useState("");
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
   const handleKeyword = (e) => {
     setKeyword(e.target.value);
+  };
+
+  const showHistory = () => {
+    setShow(true);
+  };
+
+  const hideHistory = () => {
+    setShow(false);
   };
 
   useEffect(() => {
@@ -85,12 +94,14 @@ export default function InputField() {
           type="text"
           value={ keyword }
           onChange={ handleKeyword }
+          onFocus={ showHistory }
+          onBlur={ hideHistory }
         />
         <IconSt>
           <FaSearch />
         </IconSt>
       </InputFormSt>
-      <History />
+      { show && <History /> } 
     </InputBarContainerSt>
   );
 };
