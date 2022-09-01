@@ -89,7 +89,7 @@ export default function InputField() {
 
   return (
     <InputBarContainerSt>
-      <InputFormSt>
+      <InputFormSt onSubmit={(e) => e.preventDefault()}>
         <InputSt
           type="text"
           value={ keyword }
