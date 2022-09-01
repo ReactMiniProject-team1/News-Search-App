@@ -28,7 +28,7 @@ export const saveSlice = createSlice({
           ? { ...each, clipped: true }
           : each,
       );
-      state.everyArticles.concat(data);
+      state.everyArticles = state.everyArticles.concat(data);
     },
     toggleClippedArticles: (state, action) => {
       const chosen = action.payload.chosen;

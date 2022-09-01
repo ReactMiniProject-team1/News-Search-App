@@ -58,6 +58,7 @@ export default function InputField() {
       dispatch(setHistory({ word: value }));
       dispatch(toggleIsLoading({ state: false }));
     }, 500);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (
