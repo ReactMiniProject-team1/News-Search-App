@@ -1,50 +1,67 @@
 import styled from "styled-components";
+import { FaSearch } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import getNewsData from "../.././static/getNewsData";
+import { getNewsData } from "../.././static/getNewsData";
+// import { History } from "../.././static/History";
 import { setEveryArticles, setHistory } from "../../store/slices/save";
 import {
   toggleIsLoading,
   setSearchWord,
   setPage,
 } from "../../store/slices/unsave";
-const InputContainerSt = styled.div`
+
+const SearchFormSt = styled.form`
   position: fixed;
-  /* margin-top: 2vh; */
   top: 12vh;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+`
 
-  .searchBar__input {
-    align-items: center;
-    width: 20rem;
-    height: 1.3rem;
-    padding: 0.5rem 1.5rem;
-    border: 1px solid black;
-    border-radius: 2rem;
-    position: relative;
+const SearchBarSt = styled.div`
+  position: relative;
+  align-items: center;
+ `
+ 
+const InputSt = styled.input`
+  align-items: center;
+  width: 20rem;
+  height: 1.3rem;
+  padding: 0.5rem 3.5rem 0.5rem 2rem;
+  border: 1px solid black;
+  border-radius: 2rem;
+
+  &:hover {
+    background-color: #f6f6f6;
+    border: 2px solid black;
   }
-  input:focus {
+
+  &:focus {
     border: 2px solid rgb(140, 140, 140);
     outline: none;
     font-size: 18px;
   }
-`;
+ `
+const IconSt = styled.div`
+  position: absolute;
+  top: 0.65rem;
+  right: 1.5rem;
+`
 
 let timer;
 export default function InputField() {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
 
-  const getArticles = (e) => {
+  const getArticle = (e) => {
     setValue(e.target.value);
   };
 
   useEffect(() => {
-    if (value === "") return;
+    if (!value) return;
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
@@ -61,16 +78,19 @@ export default function InputField() {
   }, [value]);
 
   return (
-    <InputContainerSt>
-      <div className="searchBar">
-        <input
+    <SearchFormSt>
+      <SearchBarSt>
+        <InputSt
           className="searchBar__input"
           type="text"
-          value={value}
-          onChange={(e) => getArticles(e)}
+          value={ value }
+          onChange={ (e) => getArticle(e) }
         />
-        <div className="searchBar__icon"></div>
-      </div>
-    </InputContainerSt>
+        <IconSt>
+          <FaSearch />
+        </IconSt>
+      </SearchBarSt>
+    </SearchFormSt>
+
   );
-}
+};
