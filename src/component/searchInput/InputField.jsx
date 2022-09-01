@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import History from "./History";
 import { FaSearch } from "react-icons/fa";
-import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getNewsData } from "../.././static/getNewsData";
-// import { History } from "../.././static/History";
+import { getNewsData } from "../../static/getNewsData";
 import { setEveryArticles, setHistory } from "../../store/slices/save";
 import {
   toggleIsLoading,
@@ -11,7 +11,7 @@ import {
   setPage,
 } from "../../store/slices/unsave";
 
-const SearchFormSt = styled.form`
+const InputBarContainerSt = styled.div`
   position: fixed;
   top: 12vh;
   left: 0;
@@ -19,13 +19,13 @@ const SearchFormSt = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
-const SearchBarSt = styled.div`
+const InputFormSt = styled.form`
   position: relative;
   align-items: center;
- `
- 
+`;
+
 const InputSt = styled.input`
   align-items: center;
   width: 20rem;
@@ -44,54 +44,63 @@ const InputSt = styled.input`
     outline: none;
     font-size: 18px;
   }
- `
+`;
 const IconSt = styled.div`
   position: absolute;
   top: 0.65rem;
   right: 1.5rem;
-`
+`;
 
 let timer;
 export default function InputField() {
-  const [value, setValue] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  const getArticle = (e) => {
-    setValue(e.target.value);
+  const handleKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const showHistory = () => {
+    setShow(true);
+  };
+
+  const hideHistory = () => {
+    setShow(false);
   };
 
   useEffect(() => {
-    if (!value) return;
+    if (!keyword) return;
     clearTimeout(timer);
 
     timer = setTimeout(async () => {
       dispatch(toggleIsLoading({ state: true }));
 
-      const data = await getNewsData(value, 1);
+      const data = await getNewsData(keyword, 1);
 
-      dispatch(setSearchWord({ word: value }));
+      dispatch(setSearchWord({ word: keyword }));
       dispatch(setPage({ page: 1 }));
       dispatch(setEveryArticles({ data: data }));
-      dispatch(setHistory({ word: value }));
+      dispatch(setHistory({ word: keyword }));
       dispatch(toggleIsLoading({ state: false }));
     }, 500);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (
-    <SearchFormSt>
-      <SearchBarSt>
+    <InputBarContainerSt>
+      <InputFormSt onSubmit={(e) => e.preventDefault()}>
         <InputSt
-          className="searchBar__input"
           type="text"
-          value={ value }
-          onChange={ (e) => getArticle(e) }
+          value={keyword}
+          onChange={handleKeyword}
+          onFocus={showHistory}
+          onBlur={hideHistory}
         />
         <IconSt>
           <FaSearch />
         </IconSt>
-      </SearchBarSt>
-    </SearchFormSt>
-
+      </InputFormSt>
+      {show && <History />}
+    </InputBarContainerSt>
   );
-};
+}
