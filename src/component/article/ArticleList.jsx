@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import ArticleItem from "./ArticleItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRef, useCallback } from "react";
+import { setPage, setSearchWord } from "../../store/slices/unsave";
+import { setMoreArticles } from "../../store/slices/save";
+import { getNewsData } from "../../static/getNewsData";
 import { IoIosArrowUp } from "react-icons/io";
 
 /* CSS */
@@ -49,18 +53,37 @@ const ScrollTopIcon = styled(IoIosArrowUp)`
 `;
 
 export default function ArticleList() {
-  const { everyArticles, clippedArticles, isMainPage } = useSelector(
+  const { everyArticles, clippedArticles, isMainPage, page } = useSelector(
     (state) => state.save,
   );
   const isLoading = useSelector((state) => state.unsave.isLoading);
 
-  console.log(everyArticles);
+  const dispatch = useDispatch();
+  const observer = useRef();
+  const lastArticleElement = useCallback(
+    (node) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          dispatch(setPage({ page: page + 1 }));
+        }
+      });
+      if (node) observer.current.observe(node);
+      console.log(node);
+    },
+    [page, dispatch],
+  );
+
   const articles =
     (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
-      (isMainPage ? everyArticles : clippedArticles).map((article) => (
-        <ArticleItem key={article.id} article={article} />
+      (isMainPage ? everyArticles : clippedArticles).map((article, index) => (
+        <div
+          ref={(index = everyArticles.length - 1 ? lastArticleElement : null)}
+        >
+          <ArticleItem key={article.id}>{article}</ArticleItem>
+        </div>
       ))
     );
 
