@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from "styled-components";
 import { BiTimeFive } from "react-icons/bi";
-import { setHistory } from "../../store/slices/save";
+// import { useSelector } from 'react-redux';
 
 const HistoryContainerSt = styled.div`
-  ${'' /* display: none; */}
   position: absolute;
   top: 40px;
   width: 20rem;
@@ -53,7 +52,7 @@ const KeywordSt = styled.span`
 
 export default function History() {
 
-  // console.log('keyword', keywords)
+  // const history = useSelector(state => state.save.history)
 
   return (
     <HistoryContainerSt>
@@ -64,7 +63,7 @@ export default function History() {
 
         <HistoryListContainerSt>
               <KeywordListSt>
-                <KeywordSt>{ setHistory }</KeywordSt>
+                <KeywordSt>이게 되네</KeywordSt>
               </KeywordListSt>
         </HistoryListContainerSt> 
     </HistoryContainerSt>
