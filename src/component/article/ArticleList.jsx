@@ -81,14 +81,7 @@ export default function ArticleList() {
     articles.length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
-      articles.map((article, index) => (
-        <div
-          key={article.id}
-          ref={index === articles.length - 1 ? lastArticleElement : undefined}
-        >
-          <ArticleItem article={article} />
-        </div>
-      ))
+      articles.map((article) => <ArticleItem article={article} />)
     );
 
   const scollTopHandler = () => {
@@ -100,6 +93,7 @@ export default function ArticleList() {
       <HrStyle />
       <ArticleSecion>
         {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : content}
+        <div ref={lastArticleElement}></div>
       </ArticleSecion>
       <ScrollTopBtn onClick={scollTopHandler}>
         <ScrollTopIcon />
