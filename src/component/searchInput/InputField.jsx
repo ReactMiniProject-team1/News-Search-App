@@ -13,12 +13,15 @@ import {
 
 const InputBarContainerSt = styled.div`
   position: fixed;
+  display: flex;
+  flex-direction: column;
   top: 12vh;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 `;
 
 const InputFormSt = styled.form`
@@ -72,11 +75,8 @@ export default function InputField() {
   useEffect(() => {
     if (!!keyword.trim()) {
       timer = setTimeout(async () => {
-      
         dispatch(toggleIsLoading({ state: true }));
-        
         const data = await getNewsData(keyword, 1);
-        
         dispatch(setSearchWord({ word: keyword }));
         dispatch(setPage({ page: 1 }));
         dispatch(setEveryArticles({ data: data }));
@@ -84,9 +84,9 @@ export default function InputField() {
         dispatch(toggleIsLoading({ state: false }));
       }, 500);
     }
-    return ()=>{
-      clearTimeout(timer) 
-    }
+    return () => {
+      clearTimeout(timer);
+    };
   }, [keyword]);
 
   return (
