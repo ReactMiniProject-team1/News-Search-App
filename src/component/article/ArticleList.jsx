@@ -74,7 +74,7 @@ export default function ArticleList() {
       });
       if (node) observer.current.observe(node);
     },
-    [isLoading, dispatch, searchWord],
+    [isLoading]
   );
   const articles = isMainPage ? everyArticles : clippedArticles;
 
