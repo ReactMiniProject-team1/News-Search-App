@@ -58,7 +58,10 @@ export const saveSlice = createSlice({
       }
       state.history.unshift(word);
     },
-
+    deleteHistory: (state, action) => {
+      const word = action.payload.word;
+      state.history = state.history.filter((each) => each !== word);
+    },
     togglePages: (state, action) => {
       state.isMainPage = action.payload.state;
     },
@@ -70,6 +73,7 @@ export const {
   setMoreArticles,
   toggleClippedArticles,
   setHistory,
+  deleteHistory,
   togglePages,
 } = saveSlice.actions;
 
