@@ -28,7 +28,7 @@ export const saveSlice = createSlice({
           ? { ...each, clipped: true }
           : each,
       );
-      state.everyArticles.concat(data);
+      state.everyArticles = state.everyArticles.concat(data);
     },
     toggleClippedArticles: (state, action) => {
       const chosen = action.payload.chosen;
@@ -54,9 +54,9 @@ export const saveSlice = createSlice({
         state.history = state.history.filter((each) => each !== word);
       }
       if (state.history.length >= 5) {
-        state.history.shift();
+        state.history.pop();
       }
-      state.history.push(word);
+      state.history.unshift(word);
     },
 
     togglePages: (state, action) => {
