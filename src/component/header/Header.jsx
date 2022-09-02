@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import logo from "../../static/logo.png";
 import Bookmark from "./BookmarkBtn";
-import { useDispatch, useSelector } from 'react-redux';
-import { togglePages } from '../../store/slices/save';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { togglePages } from "../../store/slices/save";
+import { Link } from "react-router-dom";
 
 const HeaderWrapper = styled.header`
   position: fixed;
@@ -34,22 +34,19 @@ const LogoWrap = styled(Link)`
 `;
 
 export default function Header() {
-  const isMainPage = useSelector((state)=>state.save.isMainPage)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onClickHandler = () => {
-    dispatch(
-      togglePages({state: true})
-    )
-  }
-  
+    dispatch(togglePages({ state: true }));
+  };
+
   return (
     <HeaderWrapper>
-      <Link to={ '/' } onClick={onClickHandler} >
+      <LogoWrap to={"/"} onClick={onClickHandler}>
         <Logo>
           <img src={logo} alt="logo" />
         </Logo>
-      </Link>
+      </LogoWrap>
       <Bookmark />
     </HeaderWrapper>
   );
