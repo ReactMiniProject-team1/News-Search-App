@@ -4,7 +4,7 @@ import { useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowUp } from "react-icons/io";
 import { setPage } from "../../store/slices/unsave";
-import { getNewsData } from "../../static/getNewsData";
+import { getNewsData } from "../../utils/getNewsData";
 import { setMoreArticles } from "../../store/slices/save";
 
 /* CSS */
@@ -57,24 +57,24 @@ export default function ArticleList() {
     (state) => state.save,
   );
 
-  let { isLoading, page, searchWord } = useSelector((state) => state.unsave);
+  let { isLoading, page, keyWord } = useSelector((state) => state.unsave);
   const dispatch = useDispatch();
   const observer = useRef();
   const lastArticleElement = useCallback(
     (node) => {
       if (isLoading) return;
-
+      if (!keyWord) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
           dispatch(setPage({ page: ++page }));
-          const data = await getNewsData(searchWord, page);
+          const data = await getNewsData(keyWord, page);
           dispatch(setMoreArticles({ data: data }));
         }
       });
       if (node) observer.current.observe(node);
     },
-    [isLoading]
+    [isLoading],
   );
   const articles = isMainPage ? everyArticles : clippedArticles;
 

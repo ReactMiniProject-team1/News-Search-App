@@ -3,11 +3,11 @@ import styled from "styled-components";
 import History from "./History";
 import { FaSearch } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { getNewsData } from "../../static/getNewsData";
+import { getNewsData } from "../../utils/getNewsData";
 import { setEveryArticles, setHistory } from "../../store/slices/save";
 import {
   toggleIsLoading,
-  setSearchWord,
+  setKeyWord,
   setPage,
 } from "../../store/slices/unsave";
 
@@ -77,7 +77,7 @@ export default function InputField() {
       timer = setTimeout(async () => {
         dispatch(toggleIsLoading({ state: true }));
         const data = await getNewsData(keyword, 1);
-        dispatch(setSearchWord({ word: keyword }));
+        dispatch(setKeyWord({ word: keyword }));
         dispatch(setPage({ page: 1 }));
         dispatch(setEveryArticles({ data: data }));
         dispatch(setHistory({ word: keyword }));
