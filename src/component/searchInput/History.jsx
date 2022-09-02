@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import { BiTimeFive } from "react-icons/bi";
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const HistoryContainerSt = styled.div`
   position: absolute;
@@ -30,42 +30,40 @@ const IconSt = styled.div`
   align-items: center;
 `
 
-const HistoryListContainerSt = styled.ul`
+const KeywordListSt = styled.li`
+  overflow: hidden;
   padding: 0.5rem 0.5rem 0rem;
   padding-right: 1rem;
   border-bottom: 1px solid black;
   overflow: hidden;
-`
-
-const KeywordListSt = styled.li`
-  overflow: hidden;
+  font-size: 18px;
+  font-weight: 400;
 
   &:not(:last-child) {
     margin-bottom: 10px;
   }
 `
 
-const KeywordSt = styled.span`
-  font-size: 18px;
-  font-weight: 400;
-`
-
 export default function History() {
 
-  // const history = useSelector(state => state.save.history)
-
+  const history = useSelector(state => state.save.history)
+  // const pushHistory = (history.length ? <p>No Keyword</p>: history.reverse()).map(keyword => (
+  //   <KeywordListSt>{ keyword }</KeywordListSt>
+  // ));
+  /*
+  { history.reverse()
+  */
   return (
     <HistoryContainerSt>
         <HistoryTitleContainerSt>
           <TitleSt>Recent Keyword</TitleSt>
           <IconSt><BiTimeFive /></IconSt>
         </HistoryTitleContainerSt>
-
-        <HistoryListContainerSt>
-              <KeywordListSt>
-                <KeywordSt>이게 되네</KeywordSt>
-              </KeywordListSt>
-        </HistoryListContainerSt> 
+        <ul>
+          {history.map(keyword => (
+            <KeywordListSt>{ keyword }</KeywordListSt>
+           ))}
+        </ul>
     </HistoryContainerSt>
   );
 };

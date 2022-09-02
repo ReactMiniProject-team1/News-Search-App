@@ -71,20 +71,21 @@ export default function InputField() {
   };
 
   useEffect(() => {
-    if (!keyword) return;
-    clearTimeout(timer);
-
     timer = setTimeout(async () => {
       dispatch(toggleIsLoading({ state: true }));
-
+      
       const data = await getNewsData(keyword, 1);
-
+      
       dispatch(setSearchWord({ word: keyword }));
       dispatch(setPage({ page: 1 }));
       dispatch(setEveryArticles({ data: data }));
-      dispatch(setHistory({ word: keyword }));
+      console.log(!!keyword.trim());
+      if (!!keyword.trim())  dispatch(setHistory({ word: keyword }));
       dispatch(toggleIsLoading({ state: false }));
     }, 500);
+    return ()=>{
+      clearTimeout(timer);
+    }
   }, [keyword]);
 
   return (
