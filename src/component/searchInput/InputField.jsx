@@ -84,7 +84,7 @@ export default function InputField() {
       dispatch(setHistory({ word: keyword }));
       dispatch(toggleIsLoading({ state: false }));
     }, 500);
-  }, [value]);
+  }, [keyword, dispatch]);
 
   return (
     <InputBarContainerSt>
