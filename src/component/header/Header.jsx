@@ -45,7 +45,7 @@ export default function Header() {
   
   return (
     <HeaderWrapper>
-      <Link to={isMainPage ? '' : '/'} onClick={onClickHandler} >
+      <Link to={ '/' } onClick={onClickHandler} >
         <Logo>
           <img src={logo} alt="logo" />
         </Logo>
