@@ -53,7 +53,7 @@ export const saveSlice = createSlice({
       if (state.history.includes(word)) {
         state.history = state.history.filter((each) => each !== word);
       }
-      if (state.history.length > 5) {
+      if (state.history.length >= 5) {
         state.history.pop();
       }
       state.history.unshift(word);
