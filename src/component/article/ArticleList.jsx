@@ -62,8 +62,7 @@ export default function ArticleList() {
   const observer = useRef();
   const lastArticleElement = useCallback(
     (node) => {
-      if (isLoading) return;
-      if (!searchWord) return;
+      if (isLoading || !searchWord) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
