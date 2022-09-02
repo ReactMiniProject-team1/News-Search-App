@@ -41,11 +41,14 @@ const KeywordListSt = styled.li`
   }
 `;
 
-export default function History() {
+export default function History(props) {
   const history = useSelector((state) => state.save.history);
 
   return (
-    <HistoryContainerSt>
+    <HistoryContainerSt
+      onMouseOver={props.onShowHistory}
+      onMouseOut={props.onHideHistory}
+    >
       <HistoryTitleContainerSt>
         <TitleSt>Recent Keyword</TitleSt>
         <IconSt>
