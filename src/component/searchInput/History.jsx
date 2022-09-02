@@ -43,20 +43,20 @@ const KeywordListSt = styled.li`
 `;
 
 export default function History() {
-  const history = useSelector((state) => state.save.history);
+
+  const history = useSelector(state => state.save.history)
+
   return (
     <HistoryContainerSt>
-      <HistoryTitleContainerSt>
-        <TitleSt>Recent Keyword</TitleSt>
-        <IconSt>
-          <BiTimeFive />
-        </IconSt>
-      </HistoryTitleContainerSt>
-      <ul>
-        {history.map((keyword) => (
-          <KeywordListSt>{keyword}</KeywordListSt>
-        ))}
-      </ul>
+        <HistoryTitleContainerSt>
+          <TitleSt>Recent Keyword</TitleSt>
+          <IconSt><BiTimeFive /></IconSt>
+        </HistoryTitleContainerSt>
+        <ul>
+          {history.map(keyword => (
+            <KeywordListSt key={ keyword }>{ keyword }</KeywordListSt>
+           ))}
+        </ul>
     </HistoryContainerSt>
   );
 }
