@@ -87,7 +87,7 @@ export default function InputField() {
     return () => {
       clearTimeout(timer);
     };
-  }, [keyword]);
+  }, [dispatch, keyword]);
 
   return (
     <InputBarContainerSt>
