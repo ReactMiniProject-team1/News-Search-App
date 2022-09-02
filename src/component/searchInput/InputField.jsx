@@ -111,12 +111,18 @@ export default function InputField() {
           <FaSearch />
         </IconSt>
       </InputFormSt>
-      {show && (
+      {/* {show && (
         <History
           onShowHistory={showHistotyHandler}
           onHideHistory={hideHistotyHandler}
         />
-      )}
+      )} */}
+      {
+        <History
+          onShowHistory={showHistotyHandler}
+          onHideHistory={hideHistotyHandler}
+        />
+      }
     </InputBarContainerSt>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { BiTimeFive } from "react-icons/bi";
+import { GrFormClose } from "react-icons/gr";
 import { useSelector } from "react-redux";
 
 const HistoryContainerSt = styled.div`
@@ -19,6 +20,7 @@ const HistoryTitleContainerSt = styled.div`
 const TitleSt = styled.span`
   line-height: 1.5;
   padding-left: 0.5rem;
+  margin-top: 0.3rem;
   font-size: 16px;
 `;
 
@@ -30,15 +32,25 @@ const IconSt = styled.div`
 
 const KeywordListSt = styled.li`
   overflow: hidden;
-  padding: 0.5rem 0.5rem 0rem;
-  padding-right: 1rem;
+  padding: 0.5rem 0rem 0rem;
   border-bottom: 1px solid black;
   font-size: 18px;
   font-weight: 400;
+  display: flex;
+  justify-content: space-between;
 
   &:not(:last-child) {
     margin-bottom: 10px;
   }
+`;
+
+const KeywordSpan = styled.span`
+  width: 90%;
+  overflow: hidden;
+`;
+const DeleteHistory = styled.button`
+  font-size: 20px;
+  width: 10%;
 `;
 
 export default function History(props) {
@@ -57,7 +69,12 @@ export default function History(props) {
       </HistoryTitleContainerSt>
       <ul>
         {history.map((keyword) => (
-          <KeywordListSt key={keyword}>{keyword}</KeywordListSt>
+          <KeywordListSt key={keyword}>
+            <KeywordSpan>{keyword}</KeywordSpan>
+            <DeleteHistory>
+              <GrFormClose />
+            </DeleteHistory>
+          </KeywordListSt>
         ))}
       </ul>
     </HistoryContainerSt>
