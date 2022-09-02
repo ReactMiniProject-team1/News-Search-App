@@ -4,8 +4,6 @@ import { BiTimeFive } from "react-icons/bi";
 import { useSelector } from "react-redux";
 
 const HistoryContainerSt = styled.div`
-  position: absolute;
-  top: 40px;
   width: 20rem;
   background-color: #fff;
   margin-top: 0.5rem;
