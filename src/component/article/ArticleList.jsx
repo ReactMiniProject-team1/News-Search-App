@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import ArticleItem from "./ArticleItem";
 import { useRef, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowUp } from "react-icons/io";
+import { setPage } from "../../store/slices/unsave";
+import { getNewsData } from "../../static/getNewsData";
+import { setMoreArticles } from "../../store/slices/save";
 
 /* CSS */
 const MainSection = styled.main`
@@ -53,17 +56,26 @@ export default function ArticleList() {
   const { everyArticles, clippedArticles, isMainPage } = useSelector(
     (state) => state.save,
   );
-  const isLoading = useSelector((state) => state.unsave.isLoading);
+
+  let { isLoading, page, searchWord } = useSelector((state) => state.unsave);
+  const dispatch = useDispatch();
   const observer = useRef();
-  const lastArticleElement = useCallback((node) => {
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        console.log("last article");
-      }
-    });
-    if (node) observer.current.observe(node);
-  }, []);
+  const lastArticleElement = useCallback(
+    (node) => {
+      if (isLoading) return;
+
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(async (entries) => {
+        if (entries[0].isIntersecting) {
+          dispatch(setPage({ page: ++page }));
+          const data = await getNewsData(searchWord, page);
+          dispatch(setMoreArticles({ data: data }));
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, dispatch],
+  );
   const articles = isMainPage ? everyArticles : clippedArticles;
 
   const content =
