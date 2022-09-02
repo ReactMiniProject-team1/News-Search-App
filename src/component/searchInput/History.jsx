@@ -47,12 +47,7 @@ const KeywordListSt = styled.li`
 export default function History() {
 
   const history = useSelector(state => state.save.history)
-  // const pushHistory = (history.length ? <p>No Keyword</p>: history.reverse()).map(keyword => (
-  //   <KeywordListSt>{ keyword }</KeywordListSt>
-  // ));
-  /*
-  { history.reverse()
-  */
+
   return (
     <HistoryContainerSt>
         <HistoryTitleContainerSt>
@@ -61,7 +56,7 @@ export default function History() {
         </HistoryTitleContainerSt>
         <ul>
           {history.map(keyword => (
-            <KeywordListSt>{ keyword }</KeywordListSt>
+            <KeywordListSt key={ keyword }>{ keyword }</KeywordListSt>
            ))}
         </ul>
     </HistoryContainerSt>
