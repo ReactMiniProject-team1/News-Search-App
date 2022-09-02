@@ -70,20 +70,22 @@ export default function InputField() {
   };
 
   useEffect(() => {
-    timer = setTimeout(async () => {
-      dispatch(toggleIsLoading({ state: true }));
+    if (!!keyword.trim()) {
+      timer = setTimeout(async () => {
       
-      const data = await getNewsData(keyword, 1);
-      
-      dispatch(setSearchWord({ word: keyword }));
-      dispatch(setPage({ page: 1 }));
-      dispatch(setEveryArticles({ data: data }));
-      console.log(!!keyword.trim());
-      if (!!keyword.trim())  dispatch(setHistory({ word: keyword }));
-      dispatch(toggleIsLoading({ state: false }));
-    }, 500);
+        dispatch(toggleIsLoading({ state: true }));
+        
+        const data = await getNewsData(keyword, 1);
+        
+        dispatch(setSearchWord({ word: keyword }));
+        dispatch(setPage({ page: 1 }));
+        dispatch(setEveryArticles({ data: data }));
+        dispatch(setHistory({ word: keyword }));
+        dispatch(toggleIsLoading({ state: false }));
+      }, 500);
+    }
     return ()=>{
-      clearTimeout(timer);
+      clearTimeout(timer) 
     }
   }, [keyword]);
 
