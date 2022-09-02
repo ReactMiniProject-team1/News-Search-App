@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import ArticleItem from "./ArticleItem";
-import { useDispatch, useSelector } from "react-redux";
 import { useRef, useCallback } from "react";
-import { setPage, setSearchWord } from "../../store/slices/unsave";
-import { setMoreArticles } from "../../store/slices/save";
+import { useSelector } from "react-redux";
 import { IoIosArrowUp } from "react-icons/io";
 
 /* CSS */
@@ -55,36 +53,29 @@ export default function ArticleList() {
   const { everyArticles, clippedArticles, isMainPage } = useSelector(
     (state) => state.save,
   );
-  const { isLoading, page } = useSelector((state) => state.unsave);
-
-  const data = useSelector(setMoreArticles);
-  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.unsave.isLoading);
   const observer = useRef();
-  const lastArticleElement = useCallback(
-    (node) => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          dispatch(setPage({ page: page + 1 }));
-          dispatch(setMoreArticles({ data: data }));
-        }
-      });
-      if (node) observer.current.observe(node);
-      console.log(node);
-    },
-    [data, page, dispatch],
-  );
+  const lastArticleElement = useCallback((node) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        console.log("last article");
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, []);
+  const articles = isMainPage ? everyArticles : clippedArticles;
 
-  const articles =
-    (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
+  const content =
+    articles.length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
-      (isMainPage ? everyArticles : clippedArticles).map((article, index) => (
+      articles.map((article, index) => (
         <div
           key={article.id}
-          ref={index === everyArticles.length - 1 ? lastArticleElement : null}
+          ref={index === articles.length - 1 ? lastArticleElement : undefined}
         >
-          <ArticleItem>{article}</ArticleItem>
+          <ArticleItem article={article} />
         </div>
       ))
     );
@@ -97,7 +88,7 @@ export default function ArticleList() {
     <MainSection>
       <HrStyle />
       <ArticleSecion>
-        {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : articles}
+        {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : content}
       </ArticleSecion>
       <ScrollTopBtn onClick={scollTopHandler}>
         <ScrollTopIcon />
