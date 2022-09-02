@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
   isLoading: false,
-  searchWord: "",
+  keyWord: "",
   page: 1,
 };
 
@@ -10,8 +10,8 @@ export const unsaveSlice = createSlice({
   name: "unsave",
   initialState: initalState,
   reducers: {
-    setSearchWord: (state, action) => {
-      state.searchWord = action.payload.word;
+    setKeyWord: (state, action) => {
+      state.keyWord = action.payload.word;
     },
     toggleIsLoading: (state, action) => {
       state.isLoading = action.payload.state;
@@ -22,6 +22,6 @@ export const unsaveSlice = createSlice({
   },
 });
 
-export const { setSearchWord, toggleIsLoading, setPage } = unsaveSlice.actions;
+export const { setKeyWord, toggleIsLoading, setPage } = unsaveSlice.actions;
 
 export default unsaveSlice.reducer;
