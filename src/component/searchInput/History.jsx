@@ -33,7 +33,6 @@ const KeywordListSt = styled.li`
   padding: 0.5rem 0.5rem 0rem;
   padding-right: 1rem;
   border-bottom: 1px solid black;
-  overflow: hidden;
   font-size: 18px;
   font-weight: 400;
 
@@ -43,20 +42,21 @@ const KeywordListSt = styled.li`
 `;
 
 export default function History() {
-
-  const history = useSelector(state => state.save.history)
+  const history = useSelector((state) => state.save.history);
 
   return (
     <HistoryContainerSt>
-        <HistoryTitleContainerSt>
-          <TitleSt>Recent Keyword</TitleSt>
-          <IconSt><BiTimeFive /></IconSt>
-        </HistoryTitleContainerSt>
-        <ul>
-          {history.map(keyword => (
-            <KeywordListSt key={ keyword }>{ keyword }</KeywordListSt>
-           ))}
-        </ul>
+      <HistoryTitleContainerSt>
+        <TitleSt>Recent Keyword</TitleSt>
+        <IconSt>
+          <BiTimeFive />
+        </IconSt>
+      </HistoryTitleContainerSt>
+      <ul>
+        {history.map((keyword) => (
+          <KeywordListSt key={keyword}>{keyword}</KeywordListSt>
+        ))}
+      </ul>
     </HistoryContainerSt>
   );
 }
