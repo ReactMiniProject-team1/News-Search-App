@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import ArticleItem from "./ArticleItem";
-import { useSelector } from "react-redux";
+import { useRef, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowUp } from "react-icons/io";
+import { setPage } from "../../store/slices/unsave";
+import { getNewsData } from "../../static/getNewsData";
+import { setMoreArticles } from "../../store/slices/save";
 
 /* CSS */
 const MainSection = styled.main`
@@ -52,15 +56,39 @@ export default function ArticleList() {
   const { everyArticles, clippedArticles, isMainPage } = useSelector(
     (state) => state.save,
   );
-  const isLoading = useSelector((state) => state.unsave.isLoading);
 
-  console.log(everyArticles);
-  const articles =
-    (isMainPage ? everyArticles : clippedArticles).length === 0 ? (
+  let { isLoading, page, searchWord } = useSelector((state) => state.unsave);
+  const dispatch = useDispatch();
+  const observer = useRef();
+  const lastArticleElement = useCallback(
+    (node) => {
+      if (isLoading) return;
+
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(async (entries) => {
+        if (entries[0].isIntersecting) {
+          dispatch(setPage({ page: ++page }));
+          const data = await getNewsData(searchWord, page);
+          dispatch(setMoreArticles({ data: data }));
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, dispatch],
+  );
+  const articles = isMainPage ? everyArticles : clippedArticles;
+
+  const content =
+    articles.length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
-      (isMainPage ? everyArticles : clippedArticles).map((article) => (
-        <ArticleItem key={article.id} article={article} />
+      articles.map((article, index) => (
+        <div
+          key={article.id}
+          ref={index === articles.length - 1 ? lastArticleElement : undefined}
+        >
+          <ArticleItem article={article} />
+        </div>
       ))
     );
 
@@ -72,7 +100,7 @@ export default function ArticleList() {
     <MainSection>
       <HrStyle />
       <ArticleSecion>
-        {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : articles}
+        {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : content}
       </ArticleSecion>
       <ScrollTopBtn onClick={scollTopHandler}>
         <ScrollTopIcon />
