@@ -53,9 +53,7 @@ const ScrollTopIcon = styled(IoIosArrowUp)`
 `;
 
 export default function ArticleList() {
-  const { everyArticles, clippedArticles, isMainPage } = useSelector(
-    (state) => state.save,
-  );
+  const { everyArticles, clippedArticles } = useSelector((state) => state.save);
 
   let { isLoading, page, keyWord } = useSelector((state) => state.unsave);
   const dispatch = useDispatch();
@@ -75,7 +73,8 @@ export default function ArticleList() {
     },
     [isLoading],
   );
-  const articles = isMainPage ? everyArticles : clippedArticles;
+  const { pathname } = window.location;
+  const articles = pathname === "/" ? everyArticles : clippedArticles;
 
   const content =
     articles.length === 0 ? (

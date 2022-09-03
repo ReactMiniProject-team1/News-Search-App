@@ -21,17 +21,12 @@ const BsFillBookmarkFillSt = styled(BsFillBookmarkFill)`
 `;
 
 export default function Bookmark() {
-  const isMainPage = useSelector((state) => state.save.isMainPage);
-  const dispatch = useDispatch();
-
-  const onClick = () => {
-    dispatch(togglePages({ state: !isMainPage }));
-  };
+  const { pathname } = window.location;
 
   return (
-    <BookmarkSt active={isMainPage}>
-      <Link to={isMainPage ? "/clip" : "/"}>
-        <BsFillBookmarkFillSt onClick={onClick} />
+    <BookmarkSt active={pathname === "/"}>
+      <Link to={pathname === "/" ? "/clip" : "/"}>
+        <BsFillBookmarkFillSt />
       </Link>
     </BookmarkSt>
   );
