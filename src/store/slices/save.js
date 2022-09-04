@@ -4,7 +4,6 @@ const initalState = {
   everyArticles: [],
   clippedArticles: [],
   history: [],
-  isMainPage: true,
 };
 
 export const saveSlice = createSlice({
@@ -62,9 +61,6 @@ export const saveSlice = createSlice({
       const word = action.payload.word;
       state.history = state.history.filter((each) => each !== word);
     },
-    togglePages: (state, action) => {
-      state.isMainPage = action.payload.state;
-    },
   },
 });
 
@@ -74,7 +70,6 @@ export const {
   toggleClippedArticles,
   setHistory,
   deleteHistory,
-  togglePages,
 } = saveSlice.actions;
 
 export default saveSlice.reducer;
