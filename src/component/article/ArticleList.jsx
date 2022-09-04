@@ -11,7 +11,7 @@ import { setMoreArticles } from "../../store/slices/save";
 const MainSection = styled.main`
   margin-top: 20vh;
 `;
-const ArticleSecion = styled.article`
+const ArticleSection = styled.article`
   display: grid;
   margin-top: 1.5rem;
   grid-template-columns: 1fr 1fr 1fr;
@@ -81,21 +81,23 @@ export default function ArticleList() {
     articles.length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
-      articles.map((article) => <ArticleItem article={article} />)
+      articles.map((article) => (
+        <ArticleItem key={article.id} article={article} />
+      ))
     );
 
-  const scollTopHandler = () => {
+  const scrollTopHandler = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <MainSection>
       <HrStyle />
-      <ArticleSecion>
+      <ArticleSection>
         {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : content}
-        <div ref={lastArticleElement}></div>
-      </ArticleSecion>
-      <ScrollTopBtn onClick={scollTopHandler}>
+        <div ref={lastArticleElement}></div>;
+      </ArticleSection>
+      <ScrollTopBtn onClick={scrollTopHandler}>
         <ScrollTopIcon />
       </ScrollTopBtn>
     </MainSection>
