@@ -81,9 +81,12 @@ export default function ArticleList() {
     articles.length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
-      articles.map((article) => (
-        <ArticleItem key={article.id} article={article} />
-      ))
+      <>
+        {articles.map((article) => (
+          <ArticleItem key={article.id} article={article} />
+        ))}
+        <div ref={lastArticleElement}></div>
+      </>
     );
 
   const scrollTopHandler = () => {
@@ -95,7 +98,6 @@ export default function ArticleList() {
       <HrStyle />
       <ArticleSection>
         {isLoading ? <EmptyArticleText>Loading...</EmptyArticleText> : content}
-        <div ref={lastArticleElement}></div>;
       </ArticleSection>
       <ScrollTopBtn onClick={scrollTopHandler}>
         <ScrollTopIcon />
