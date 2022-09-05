@@ -13,7 +13,7 @@ import saveReducer from "./slices/save.js";
 import unsaveReudcer from "./slices/unsave.js";
 
 const persistConfig = {
-  key: "root",
+  key: "clippedArticles/History",
   storage,
   whitelist: ["clippedArticles", "history"],
 };
