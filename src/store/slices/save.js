@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
-  everyArticles: [],
-  clippedArticles: [],
+  everyArticles: {},
+  clippedArticles: {},
   history: [],
 };
 
@@ -11,40 +11,40 @@ export const saveSlice = createSlice({
   initialState: initalState,
   reducers: {
     setEveryArticles: (state, action) => {
-      const clippedArticles = state.clippedArticles;
       const data = action.payload.data;
-      state.everyArticles = data.map((each) =>
-        !!clippedArticles.find((clip) => clip.id === each.id)
-          ? { ...each, clipped: true }
-          : each,
-      );
+      const keys = Object.keys(data);
+      for (const key of keys) {
+        if (state.clippedArticles[key]) {
+          data[key] = { ...data[key], clipped: true };
+        }
+      }
+      state.everyArticles = data;
     },
     setMoreArticles: (state, action) => {
-      const clippedArticles = state.clippedArticles;
-      let data = action.payload.data;
-      data = data.map((each) =>
-        !!clippedArticles.find((clip) => clip.id === each.id)
-          ? { ...each, clipped: true }
-          : each,
-      );
-      state.everyArticles = state.everyArticles.concat(data);
+      const data = action.payload.data;
+      const keys = Object.keys(data);
+      for (const key of keys) {
+        if (state.clippedArticles[key]) {
+          data[key] = { ...data[key], clipped: true };
+        }
+      }
+      state.everyArticles = { ...state.everyArticles, ...data };
     },
     toggleClippedArticles: (state, action) => {
       const chosen = action.payload.chosen;
       const id = chosen.id;
 
       if (!chosen.clipped) {
-        state.clippedArticles.push({ ...chosen, clipped: true });
-        state.everyArticles = state.everyArticles.map((article) =>
-          article.id === id ? { ...article, clipped: true } : article,
-        );
+        state.clippedArticles = {
+          ...state.clippedArticles,
+          [id]: { ...chosen, clipped: true },
+        };
+        state.everyArticles[id].clipped = true;
       } else {
-        state.clippedArticles = state.clippedArticles.filter(
-          (article) => article.id !== id,
-        );
-        state.everyArticles = state.everyArticles.map((article) =>
-          article.id === id ? { ...article, clipped: false } : article,
-        );
+        delete state.clippedArticles[id];
+        if (state.everyArticles[id]) {
+          state.everyArticles[id].clipped = false;
+        }
       }
     },
     setHistory: (state, action) => {
