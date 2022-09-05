@@ -80,15 +80,19 @@ export default function InputField() {
     setIsShowHistory(false);
   };
 
+  const saveDataInStore = (data) => {
+    dispatch(setKeyWord({ word: keyword }));
+    dispatch(setPage({ page: 1 }));
+    dispatch(setEveryArticles({ data: data }));
+    dispatch(setHistory({ word: keyword }));
+  };
+
   useEffect(() => {
     if (!!keyword.trim()) {
       timer = setTimeout(async () => {
         dispatch(toggleIsLoading({ state: true }));
         const data = await getNewsData(keyword, 1);
-        dispatch(setKeyWord({ word: keyword }));
-        dispatch(setPage({ page: 1 }));
-        dispatch(setEveryArticles({ data: data }));
-        dispatch(setHistory({ word: keyword }));
+        saveDataInStore(data);
         dispatch(toggleIsLoading({ state: false }));
       }, 500);
     }
@@ -111,18 +115,12 @@ export default function InputField() {
           <FaSearch />
         </IconSt>
       </InputFormSt>
-      {/* {show && (
+      {show && (
         <History
           onShowHistory={showHistotyHandler}
           onHideHistory={hideHistotyHandler}
         />
-      )} */}
-      {
-        <History
-          onShowHistory={showHistotyHandler}
-          onHideHistory={hideHistotyHandler}
-        />
-      }
+      )}
     </InputBarContainerSt>
   );
 }

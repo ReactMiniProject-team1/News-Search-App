@@ -9,10 +9,11 @@ export const getNewsData = async (keyword, page) => {
   const URL = (keyword, page) =>
     `${BASE_URL}?api-key=${API_KEY}&q=${keyword}&page=${page}&begin_date=19800101&sort=relevance`;
 
-  let result = await axios
+  const resultObj = {};
+  const result = await axios
     .get(URL(keyword, page))
     .then((res) => res.data.response.docs);
-  result = result.map((each) => {
+  result.forEach((each) => {
     const {
       headline: { main: title },
       pub_date: date,
@@ -20,7 +21,8 @@ export const getNewsData = async (keyword, page) => {
       web_url: url,
       _id: id,
     } = each;
-    return { title, date: date.slice(0, 10), content, url, id, clipped: false };
+
+    resultObj[id] = { title, date, content, url, id, clipped: false };
   });
-  return result;
+  return resultObj;
 };

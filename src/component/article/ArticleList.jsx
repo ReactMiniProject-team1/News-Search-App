@@ -53,12 +53,16 @@ const ScrollTopIcon = styled(IoIosArrowUp)`
 `;
 
 export default function ArticleList() {
-  const { everyArticles, clippedArticles, isMainPage } = useSelector(
-    (state) => state.save,
+  const everyArticles = Object.entries(
+    useSelector((state) => state.save.everyArticles),
   );
-
+  const clippedArticles = Object.entries(
+    useSelector((state) => state.save.clippedArticles),
+  );
   let { isLoading, page, keyWord } = useSelector((state) => state.unsave);
   const dispatch = useDispatch();
+  const { pathname } = window.location;
+
   const observer = useRef();
   const lastArticleElement = useCallback(
     (node) => {
@@ -75,20 +79,18 @@ export default function ArticleList() {
     },
     [isLoading],
   );
-  const articles = isMainPage ? everyArticles : clippedArticles;
+  const articles = pathname === "/" ? everyArticles : clippedArticles;
 
   const content =
     articles.length === 0 ? (
       <EmptyArticleText>There are no articles.</EmptyArticleText>
     ) : (
-      articles.map((article, index) => (
-        <div
-          key={article.id}
-          ref={index === articles.length - 1 ? lastArticleElement : undefined}
-        >
-          <ArticleItem article={article} />
-        </div>
-      ))
+      <>
+        {articles.map((article) => (
+          <ArticleItem key={article[0]} article={article[1]} />
+        ))}
+        {pathname === "/" ? <div ref={lastArticleElement}></div> : ""}
+      </>
     );
 
   const scollTopHandler = () => {
