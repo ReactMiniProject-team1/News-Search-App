@@ -22,7 +22,14 @@ export const getNewsData = async (keyword, page) => {
       _id: id,
     } = each;
 
-    resultObj[id] = { title, date, content, url, id, clipped: false };
+    resultObj[id] = {
+      title,
+      date: date.slice(0, 10),
+      content,
+      url,
+      id,
+      clipped: false,
+    };
   });
   return resultObj;
 };

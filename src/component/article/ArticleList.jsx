@@ -53,10 +53,10 @@ const ScrollTopIcon = styled(IoIosArrowUp)`
 `;
 
 export default function ArticleList() {
-  const everyArticles = Object.entries(
+  const everyArticles = Object.values(
     useSelector((state) => state.save.everyArticles),
   );
-  const clippedArticles = Object.entries(
+  const clippedArticles = Object.values(
     useSelector((state) => state.save.clippedArticles),
   );
   let { isLoading, page, keyWord } = useSelector((state) => state.unsave);
@@ -87,7 +87,7 @@ export default function ArticleList() {
     ) : (
       <>
         {articles.map((article) => (
-          <ArticleItem key={article[0]} article={article[1]} />
+          <ArticleItem key={article.id} article={article} />
         ))}
         {pathname === "/" ? <div ref={lastArticleElement}></div> : ""}
       </>
