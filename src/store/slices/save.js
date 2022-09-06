@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
 const initalState = {
   everyArticles: {},
@@ -12,33 +14,28 @@ export const saveSlice = createSlice({
   reducers: {
     setEveryArticles: (state, action) => {
       const data = action.payload.data;
-      const keys = Object.keys(data);
-      for (const key of keys) {
+      Object.keys(data).forEach(([key, value]) => {
         if (state.clippedArticles[key]) {
-          data[key] = { ...data[key], clipped: true };
+          data[key] = { ...value, clipped: true };
         }
-      }
+      });
       state.everyArticles = data;
     },
     setMoreArticles: (state, action) => {
-      const data = action.payload.data;
-      const keys = Object.keys(data);
-      for (const key of keys) {
+      Object.entries(action.payload.data).forEach(([key, value]) => {
         if (state.clippedArticles[key]) {
-          data[key] = { ...data[key], clipped: true };
+          state.everyArticles[key] = { ...value, clipped: true };
+        } else {
+          state.everyArticles[key] = value;
         }
-      }
-      state.everyArticles = { ...state.everyArticles, ...data };
+      });
     },
     toggleClippedArticles: (state, action) => {
       const chosen = action.payload.chosen;
       const id = chosen.id;
 
       if (!chosen.clipped) {
-        state.clippedArticles = {
-          ...state.clippedArticles,
-          [id]: { ...chosen, clipped: true },
-        };
+        state.clippedArticles[id] = { ...chosen, clipped: true };
         state.everyArticles[id].clipped = true;
       } else {
         delete state.clippedArticles[id];
@@ -64,6 +61,14 @@ export const saveSlice = createSlice({
   },
 });
 
+const persistConfig = {
+  key: "clippedArticles/History",
+  storage,
+  whitelist: ["clippedArticles", "history"],
+};
+
+const saveReducer = persistReducer(persistConfig, saveSlice.reducer);
+
 export const {
   setEveryArticles,
   setMoreArticles,
@@ -72,4 +77,4 @@ export const {
   deleteHistory,
 } = saveSlice.actions;
 
-export default saveSlice.reducer;
+export default saveReducer;

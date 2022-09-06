@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
-  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -8,18 +7,11 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import saveReducer from "./slices/save.js";
 import unsaveReudcer from "./slices/unsave.js";
 
-const persistConfig = {
-  key: "clippedArticles/History",
-  storage,
-  whitelist: ["clippedArticles", "history"],
-};
-
 const rootReducer = combineReducers({
-  save: persistReducer(persistConfig, saveReducer),
+  save: saveReducer,
   unsave: unsaveReudcer,
 });
 
