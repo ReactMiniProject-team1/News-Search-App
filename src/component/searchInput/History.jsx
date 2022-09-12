@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { BiTimeFive } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deleteHistory } from "../../store/slices/save";
 const HistoryContainerSt = styled.div`
   width: 20rem;
   background-color: #fff;
@@ -44,7 +44,7 @@ const KeywordListSt = styled.li`
   }
 `;
 
-const KeywordSpan = styled.span`
+const KeywordSpan = styled.div`
   width: 90%;
   overflow: hidden;
 `;
@@ -55,7 +55,12 @@ const DeleteHistory = styled.button`
 
 export default function History(props) {
   const history = useSelector((state) => state.save.history);
+  const dispatch = useDispatch();
 
+  const deleteKeyword = (e) => {
+    const word = e.currentTarget.parentNode.parentNode.firstChild.innerText;
+    dispatch(deleteHistory({ word: word }));
+  };
   return (
     <HistoryContainerSt
       onMouseOver={props.onShowHistory}
@@ -72,7 +77,7 @@ export default function History(props) {
           <KeywordListSt key={keyword}>
             <KeywordSpan>{keyword}</KeywordSpan>
             <DeleteHistory>
-              <GrFormClose />
+              <GrFormClose onClick={deleteKeyword} />
             </DeleteHistory>
           </KeywordListSt>
         ))}
